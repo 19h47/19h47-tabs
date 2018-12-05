@@ -8,7 +8,7 @@ export default class TabulationEverywhere {
 		this.$nav = this.$cont.querySelector('.js-nav');
 		this.$tabulation = this.$cont.querySelector('.js-tabulation');
 
-		this.buttons = Array.from(this.$nav.children);
+		this.buttons = this.$cont.querySelectorAll('.js-button');
 		this.panels = Array.from(this.$tabulation.children);
 
 		this.count = Math.max(this.buttons.length, this.panels.length);
@@ -45,6 +45,8 @@ export default class TabulationEverywhere {
 			this.buttons[i].addEventListener('focus', () => {
 				this.toggle(this.buttons[i]);
 			});
+
+			this.panels[i].style.setProperty('position', 'absolute');
 		}
 	}
 
