@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Tabulation everywhere</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<style>
+		.tab-content > .is-active {
+			display: block;
+		}
+		.nav-tabs .nav-link.is-active {
+			color: #495057;
+			background-color: #fff;
+			border-color: #dee2e6 #dee2e6 #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="my-5">
+					<a href="https://github.com/19h47/tabulation-everywhere">
+						Tabulation everywhere
+					</a>
+				</h1>
+			</div>
+			<div class="col-12">
+				<div class="js-tabulation-everywhere p-3">
+					<nav>
+						<div class="nav nav-tabs mb-3 js-nav" role="tablist">
+							<a class="nav-item nav-link is-active" href="#home" role="tab" aria-selected="true" data-name="home">Home</a>
+							<a class="nav-item nav-link" href="#project" role="tab" aria-selected="false" data-name="project">Project</a>
+							<a class="nav-item nav-link" href="#contact" role="tab" aria-selected="false" data-name="contact">Contact</a>
+						</div>
+					</nav>
+
+					<div class="tab-content js-tabulation">
+						<section class="tab-pane is-active" role="tabpanel" data-name="home">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic, vero. Fugiat voluptas ex consequatur hic nemo officia iure placeat non, pariatur, dolore natus nobis, tempore dolores dicta nisi inventore.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse animi illo voluptate possimus quidem quo ut culpa ullam molestias, mollitia eaque commodi eos. Illum ea dignissimos recusandae suscipit nulla veniam.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sed, consequuntur repellendus architecto, harum cumque velit, eius debitis ea voluptatibus officiis. Eaque quas modi nisi optio quasi, neque mollitia quo.</p>
+						</section>
+						<section class="tab-pane" role="tabpanel" data-name="project">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque cum ad officia reiciendis assumenda earum officiis praesentium rem. A, voluptates itaque eligendi quae odit sunt voluptatibus consequuntur soluta distinctio assumenda. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus veniam in velit modi animi quod est, voluptatem voluptatum fugiat. Harum architecto, quae repellendus nobis, libero vel corporis quibusdam! Enim, numquam.</p>
+						</section>
+						<section class="tab-pane" role="tabpanel" data-name="contact">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi id doloribus soluta minima nulla nemo rerum, eveniet dolorem earum! Similique atque, aliquam esse dolores alias minima voluptas mollitia quos nisi.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, quia, sunt. Laudantium possimus vel ex nam fugit est eligendi sapiente repellat ab a. Neque saepe magni laudantium dolorem, obcaecati earum.</p>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="main.js"></script>
+	<script>
+		const $element = document.querySelector('.js-tabulation-everywhere');
+		const tabulationEverywhere = new TabulationEverywhere.default($element);
+		tabulationEverywhere.init();
+	</script>
+</body>
+</html>

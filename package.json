@@ -1,0 +1,38 @@
+{
+ "name": "tabulation-everywhere",
+ "version": "1.0.0",
+ "description": "Tabulation everywhere",
+ "main": "src/TabulationEverywhere.js",
+ "scripts": {
+  "prod": "./bin/production",
+  "dev": "./bin/development",
+  "deploy": "./bin/deploy",
+  "server": "./bin/server"
+ },
+ "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+ "license": "ISC",
+ "dependencies": {
+  "@babel/core": "^7.2.0",
+  "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+  "@babel/plugin-transform-runtime": "^7.2.0",
+  "@babel/preset-env": "^7.2.0",
+  "@babel/runtime": "^7.2.0",
+  "babel-eslint": "^10.0.1",
+  "babel-loader": "^8.0.4",
+  "clean-webpack-plugin": "^1.0.0",
+  "eslint": "^5.9.0",
+  "eslint-config-airbnb-base": "^13.1.0",
+  "eslint-config-standard": "^12.0.0",
+  "eslint-import-resolver-webpack": "^0.10.1",
+  "eslint-loader": "^2.1.1",
+  "eslint-plugin-import": "^2.14.0",
+  "eslint-plugin-node": "^8.0.0",
+  "eslint-plugin-promise": "^4.0.1",
+  "eslint-plugin-standard": "^4.0.0",
+  "html-webpack-plugin": "^3.2.0",
+  "webpack": "^4.27.0",
+  "webpack-cli": "^3.1.2",
+  "webpack-dev-server": "^3.1.10",
+  "webpack-notifier": "^1.7.0"
+ }
+}
