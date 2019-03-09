@@ -1,23 +1,18 @@
-import getHighestHeight from 'Utils/getHighestHeight';
+// import getHighestHeight from 'Utils/getHighestHeight';
 import getHash from 'Utils/getHash';
 
-export default class TabulationEverywhere {
+export default class Tabs {
 	constructor(element) {
 		this.$cont = element;
 
 		this.$nav = this.$cont.querySelector('.js-nav');
-		this.$tabulation = this.$cont.querySelector('.js-tabulation');
+		this.$content = this.$cont.querySelector('.js-content');
 
 		this.buttons = this.$cont.querySelectorAll('.js-button');
-		this.panels = Array.from(this.$tabulation.children);
+		this.panels = Array.from(this.$content.children);
 
 		this.count = Math.max(this.buttons.length, this.panels.length);
 		this.href = getHash(window.location.href);
-
-		// Bind method
-		this.onResize = this.onResize.bind(this);
-
-		this.onResize();
 	}
 
 	init() {
@@ -45,18 +40,15 @@ export default class TabulationEverywhere {
 			this.buttons[i].addEventListener('focus', () => {
 				this.toggle(this.buttons[i]);
 			});
-
-			this.panels[i].style.setProperty('position', 'absolute');
 		}
 	}
 
-
-	// Events
-	onResize() {
-		this.$tabulation.style.setProperty('height', `${getHighestHeight(this.panels)}px`);
-	}
-
-
+	/**
+	 * Toggle
+	 *
+	 * @param
+	 * @return
+	 */
 	toggle(element) {
 		this.closeAll();
 
@@ -73,14 +65,16 @@ export default class TabulationEverywhere {
 	}
 
 	/**
-	 * @param  obj element
-	 * @return obj
+	 * Open
+	 *
+	 * @param
+	 * @return
 	 */
 	open(element) {
 		const current = element.getAttribute('data-name');
 		element.setAttribute('aria-selected', true);
 
-		this.$tabulation.querySelector(`[data-name=${current}]`).classList.add('is-active');
+		this.$content.querySelector(`[data-name=${current}]`).classList.add('is-active');
 
 		return element.classList.add('is-active');
 	}

@@ -3,3 +3,4 @@ node_modules
 prototypes
 vendor
 .DS_Store
+.npmignore

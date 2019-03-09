@@ -1,7 +1,8 @@
 /**
- * [description]
- * @param  {[type]} href [description]
- * @return {[type]}      [description]
+ * Get hash
+ *
+ * @param  str href Given href.
+ * @return str
  * @see https://github.com/ReactTraining/history/blob/master/modules/createHashHistory.js#L38
  */
 export default function (href) {

@@ -10,6 +10,16 @@
 		.tab-content > .is-active {
 			display: block;
 		}
+
+		.tab-pane {
+  			animation: fadeEffect 1s;
+		}
+
+		@keyframes fadeEffect {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
 		.nav-tabs .nav-link.is-active {
 			color: #495057;
 			background-color: #fff;
@@ -23,12 +33,12 @@
 			<div class="col-12">
 				<h1 class="my-5">
 					<a href="https://github.com/19h47/tabulation-everywhere">
-						Tabulation everywhere
+						Tabs
 					</a>
 				</h1>
 			</div>
 			<div class="col-12">
-				<div class="js-tabulation-everywhere p-3">
+				<div class="js-tabs p-3">
 					<nav>
 						<div class="nav nav-tabs mb-3" role="tablist">
 							<a class="nav-item nav-link js-button is-active" href="#home" role="tab" aria-selected="true" data-name="home">Home</a>
@@ -37,16 +47,16 @@
 						</div>
 					</nav>
 
-					<div class="tab-content js-tabulation">
-						<section class="tab-pane is-active" role="tabpanel" data-name="home">
+					<div class="tab-content js-content">
+						<section class="tab-pane is-active m-3" role="tabpanel" data-name="home">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic, vero. Fugiat voluptas ex consequatur hic nemo officia iure placeat non, pariatur, dolore natus nobis, tempore dolores dicta nisi inventore.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse animi illo voluptate possimus quidem quo ut culpa ullam molestias, mollitia eaque commodi eos. Illum ea dignissimos recusandae suscipit nulla veniam.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sed, consequuntur repellendus architecto, harum cumque velit, eius debitis ea voluptatibus officiis. Eaque quas modi nisi optio quasi, neque mollitia quo.</p>
 						</section>
-						<section class="tab-pane" role="tabpanel" data-name="project">
+						<section class="tab-pane m-3" role="tabpanel" data-name="project">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque cum ad officia reiciendis assumenda earum officiis praesentium rem. A, voluptates itaque eligendi quae odit sunt voluptatibus consequuntur soluta distinctio assumenda. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus veniam in velit modi animi quod est, voluptatem voluptatum fugiat. Harum architecto, quae repellendus nobis, libero vel corporis quibusdam! Enim, numquam.</p>
 						</section>
-						<section class="tab-pane" role="tabpanel" data-name="contact">
+						<section class="tab-pane m-3" role="tabpanel" data-name="contact">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi id doloribus soluta minima nulla nemo rerum, eveniet dolorem earum! Similique atque, aliquam esse dolores alias minima voluptas mollitia quos nisi.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, quia, sunt. Laudantium possimus vel ex nam fugit est eligendi sapiente repellat ab a. Neque saepe magni laudantium dolorem, obcaecati earum.</p>
 						</section>
@@ -59,9 +69,9 @@
 
 	<script src="main.js"></script>
 	<script>
-		const $element = document.querySelector('.js-tabulation-everywhere');
-		const tabulationEverywhere = new TabulationEverywhere.default($element);
-		tabulationEverywhere.init();
+		const $element = document.querySelector('.js-tabs');
+		const tabs = new Tabs.default($element);
+		tabs.init();
 	</script>
 </body>
 </html>
