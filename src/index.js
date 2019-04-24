@@ -121,6 +121,7 @@ export default class Tabs {
 	 */
 	keyupEventListener(event) {
 		const key = event.keyCode;
+		const { target } = event;
 
 		switch (key) {
 			case keycode.LEFT:
@@ -130,8 +131,12 @@ export default class Tabs {
 
 			case keycode.DELETE:
 			case keycode.BACKSPACE:
-				this.determineDeletable(event);
+				// If tab is active
+				if ('true' === target.getAttribute('aria-selected')) {
+					this.determineDeletable(event);
+				}
 				break;
+
 			default:
 				break;
 		}
@@ -287,9 +292,6 @@ export default class Tabs {
 	 */
 	determineDeletable(event) {
 		const { target } = event;
-
-		// If tab is not active
-		if ('true' !== target.getAttribute('aria-selected')) return false;
 
 		if (null !== target.getAttribute('data-deletable')) {
 			// Delete target tab
