@@ -8,5 +8,5 @@
 export default function (href) {
 	const hashIndex = href.indexOf('#');
 
-	return hashIndex === -1 ? '' : href.substring(hashIndex + 1);
+	return -1 === hashIndex ? '' : href.substring(hashIndex + 1);
 }

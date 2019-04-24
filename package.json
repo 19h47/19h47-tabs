@@ -1,38 +1,42 @@
 {
     "name": "@19h47/tabs",
-    "version": "2.0.1",
+    "version": "3.0.0",
     "description": "Tabs",
-    "main": "src/index.js",
+    "main": "dist/main.js",
     "scripts": {
         "prod": "./bin/production",
         "dev": "./bin/development",
         "deploy": "./bin/deploy",
-        "server": "./bin/server"
+        "start": "./bin/start"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/19h47/19h47-tabs.git"
     },
     "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
     "license": "ISC",
     "dependencies": {
-        "@babel/core": "^7.2.2",
+        "@babel/core": "^7.4.3",
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-        "@babel/plugin-transform-runtime": "^7.2.0",
-        "@babel/preset-env": "^7.2.3",
-        "@babel/runtime": "^7.2.0",
+        "@babel/plugin-transform-runtime": "^7.4.3",
+        "@babel/preset-env": "^7.4.3",
+        "@babel/runtime": "^7.4.3",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
         "clean-webpack-plugin": "^1.0.0",
-        "eslint": "^5.12.0",
+        "eslint": "^5.16.0",
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-standard": "^12.0.0",
         "eslint-import-resolver-webpack": "^0.10.1",
         "eslint-loader": "^2.1.1",
-        "eslint-plugin-import": "^2.14.0",
+        "eslint-plugin-import": "^2.17.2",
         "eslint-plugin-node": "^8.0.1",
-        "eslint-plugin-promise": "^4.0.1",
+        "eslint-plugin-promise": "^4.1.1",
         "eslint-plugin-standard": "^4.0.0",
         "html-webpack-plugin": "^3.2.0",
-        "webpack": "^4.28.3",
-        "webpack-cli": "^3.2.0",
-        "webpack-dev-server": "^3.1.14",
+        "webpack": "^4.30.0",
+        "webpack-cli": "^3.3.1",
+        "webpack-dev-server": "^3.3.1",
         "webpack-notifier": "^1.7.0"
     }
 }

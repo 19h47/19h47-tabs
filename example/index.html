@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Tabulation everywhere</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<style>
 		.tab-content > .is-active {
 			display: block;
@@ -22,8 +22,14 @@
 
 		.nav-tabs .nav-link.is-active {
 			color: #495057;
-			background-color: #fff;
-			border-color: #dee2e6 #dee2e6 #fff;
+    		background-color: #fff;
+    		border-color: #dee2e6 #dee2e6 #fff;
+		}
+
+		.nav-tabs .nav-link {
+			color: #007bff;
+			text-decoration: none;
+			background-color: transparent;
 		}
 	</style>
 </head>
@@ -39,24 +45,29 @@
 			</div>
 			<div class="col-12">
 				<div class="js-tabs p-3">
-					<nav>
-						<div class="nav nav-tabs mb-3" role="tablist">
-							<a class="nav-item nav-link js-button is-active" href="#home" role="tab" aria-selected="true" data-name="home">Home</a>
-							<a class="nav-item nav-link js-button" href="#project" role="tab" aria-selected="false" data-name="project">Project</a>
-							<a class="nav-item nav-link js-button" href="#contact" role="tab" aria-selected="false" data-name="contact">Contact</a>
-						</div>
-					</nav>
 
-					<div class="tab-content js-content">
-						<section class="tab-pane is-active m-3" role="tabpanel" data-name="home">
+					<ul class="nav nav-tabs mb-3" role="tablist">
+						<li class="nav-item">
+							<button type="button" class="nav-link is-active" role="tab" aria-selected="true" aria-controls="home-tab" id="home">Home</button>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="nav-link" role="tab" aria-selected="false" aria-controls="project-tab" id="project" tabindex="-1">Project</button>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="nav-link" role="tab" aria-selected="false" aria-controls="contact-tab" id="contact" tabindex="-1" data-deletable="">Contact</button>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<section class="tab-pane is-active m-3" tabindex="0" role="tabpanel" aria-labelledby="home" id="home-tab">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic, vero. Fugiat voluptas ex consequatur hic nemo officia iure placeat non, pariatur, dolore natus nobis, tempore dolores dicta nisi inventore.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse animi illo voluptate possimus quidem quo ut culpa ullam molestias, mollitia eaque commodi eos. Illum ea dignissimos recusandae suscipit nulla veniam.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sed, consequuntur repellendus architecto, harum cumque velit, eius debitis ea voluptatibus officiis. Eaque quas modi nisi optio quasi, neque mollitia quo.</p>
 						</section>
-						<section class="tab-pane m-3" role="tabpanel" data-name="project">
+						<section class="tab-pane m-3" tabindex="0" role="tabpanel" aria-labelledby="project" id="project-tab" hidden="">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque cum ad officia reiciendis assumenda earum officiis praesentium rem. A, voluptates itaque eligendi quae odit sunt voluptatibus consequuntur soluta distinctio assumenda. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus veniam in velit modi animi quod est, voluptatem voluptatum fugiat. Harum architecto, quae repellendus nobis, libero vel corporis quibusdam! Enim, numquam.</p>
 						</section>
-						<section class="tab-pane m-3" role="tabpanel" data-name="contact">
+						<section class="tab-pane m-3" tabindex="0" role="tabpanel" aria-labelledby="contact" id="contact-tab" hidden="">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi id doloribus soluta minima nulla nemo rerum, eveniet dolorem earum! Similique atque, aliquam esse dolores alias minima voluptas mollitia quos nisi.</p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, quia, sunt. Laudantium possimus vel ex nam fugit est eligendi sapiente repellat ab a. Neque saepe magni laudantium dolorem, obcaecati earum.</p>
 						</section>
