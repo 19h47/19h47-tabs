@@ -9,7 +9,7 @@ module.exports = {
 	watch: production ? false : true,
 	entry: {
 		dist: path.resolve(__dirname, 'src/index.js'),
-		example: path.resolve(__dirname, 'src/index.js')
+		docs: path.resolve(__dirname, 'src/index.js')
 	},
 	output: {
 		library: 'Tabs',
@@ -46,14 +46,14 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(
-			['dist', 'example'],
+			['dist', 'docs'],
 			{
 				exclude: ['.git']
 			}
 		),
 		new WebpackNotifier(),
 		new HtmlWebpackPlugin({
-			filename: path.resolve(__dirname, 'example/index.html' ),
+			filename: path.resolve(__dirname, 'docs/index.html' ),
 			template: path.resolve(__dirname, 'index.html' ),
 			inject: false,
 		})
