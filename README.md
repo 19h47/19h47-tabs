@@ -79,7 +79,7 @@ Delete | When focus is on the Joke tab, removes the tab from the tab list and pl
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/19h47-tabs/), see [sources](/example/index.html).
+An example is located right [here](https://19h47.github.io/19h47-tabs/), see [sources](/docs/index.html).
 
 ## Acknowledgments
 
