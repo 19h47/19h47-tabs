@@ -75,7 +75,7 @@ Right Arrow | When a tab has focus:<ul><li>Moves focus to the next tab.</li><li>
 Left Arrow | When a tab has focus:<ul><li>Moves focus to the previous tab.</li><li>If focus is on the first tab, moves focus to the last tab.</li></ul>
 Home<br>`fn + left arrow` | When a tab has focus, moves focus to the first tab.
 End<br>`fn + right arrow` | When a tab has focus, moves focus to the last tab.
-Delete | When focus is on the Joke tab, removes the tab from the tab list and places focus on the previous tab.
+Delete | When focus is on the **Contact** tab, removes the tab from the tab list and places focus on the previous tab.
 
 ## Example
 
