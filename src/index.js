@@ -293,24 +293,24 @@ export default class Tabs {
 	determineDeletable(event) {
 		const { target } = event;
 
-		if (null !== target.getAttribute('data-deletable')) {
-			// Delete target tab
-			this.deleteTab(event, target);
-
-			// Update arrays related to tabs widget
-			this.generateArrays();
-
-			// Activate the closest tab to the one that was just deleted
-			if (0 > target.index - 1) {
-				this.activateTab(this.tabs[0]);
-			} else {
-				this.activateTab(this.tabs[target.index - 1]);
-			}
-
-			return true;
+		if (null === target.getAttribute('data-deletable')) {
+			return false;
 		}
 
-		return false;
+		// Delete target tab
+		this.deleteTab(event, target);
+
+		// Update arrays related to tabs widget
+		this.generateArrays();
+
+		// Activate the closest tab to the one that was just deleted
+		if (0 > target.index - 1) {
+			this.activateTab(this.tabs[0]);
+		} else {
+			this.activateTab(this.tabs[target.index - 1]);
+		}
+
+		return true;
 	}
 
 
@@ -320,7 +320,7 @@ export default class Tabs {
 	 * Deletes a tab and its panel
 	 *
 	 * @param  obj event
-	 * @return {[type]}       [description]
+	 * @return
 	 */
 	deleteTab(event) {
 		const { target } = event;
