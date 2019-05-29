@@ -1,6 +1,15 @@
 // import getHighestHeight from 'Utils/getHighestHeight';
 import getHash from 'Utils/getHash';
-import keycode from 'src/keycode';
+import {
+	END,
+	HOME,
+	LEFT,
+	UP,
+	RIGHT,
+	BACKSPACE,
+	DOWN,
+	DELETE,
+} from '@19h47/keycode';
 import direction from 'src/direction';
 
 export default class Tabs {
@@ -85,14 +94,14 @@ export default class Tabs {
 		const key = event.keyCode;
 
 		switch (key) {
-			case keycode.END:
+			case END:
 				event.preventDefault();
 
 				// Activate last tab
 				this.activateTab(this.tabs[this.tabs.length - 1]);
 				break;
 
-			case keycode.HOME:
+			case HOME:
 				event.preventDefault();
 
 				// Activate first tab
@@ -100,8 +109,8 @@ export default class Tabs {
 				break;
 
 			// Up and down are in keydown because we need to prevent page scroll >:)
-			case keycode.UP:
-			case keycode.DOWN:
+			case UP:
+			case DOWN:
 				this.determineOrientation(event);
 				break;
 
@@ -124,13 +133,13 @@ export default class Tabs {
 		const { target } = event;
 
 		switch (key) {
-			case keycode.LEFT:
-			case keycode.RIGHT:
+			case LEFT:
+			case RIGHT:
 				this.determineOrientation(event);
 				break;
 
-			case keycode.DELETE:
-			case keycode.BACKSPACE:
+			case DELETE:
+			case BACKSPACE:
 				// If tab is active
 				if ('true' === target.getAttribute('aria-selected')) {
 					this.determineDeletable(event);
@@ -157,10 +166,10 @@ export default class Tabs {
 		const vertical = 'vertical' === this.$tablist.getAttribute('aria-orientation');
 		let proceed = false;
 
-		if (vertical && (key === keycode.UP || key === keycode.DOWN)) {
+		if (vertical && (key === UP || key === DOWN)) {
 			event.preventDefault();
 			proceed = true;
-		} else if (key === keycode.LEFT || key === keycode.RIGHT) {
+		} else if (key === LEFT || key === RIGHT) {
 			proceed = true;
 		}
 
@@ -192,9 +201,9 @@ export default class Tabs {
 			if (target.index !== undefined) {
 				if (this.tabs[target.index + direction[pressed]]) {
 					this.tabs[target.index + direction[pressed]].focus();
-				} else if (pressed === keycode.LEFT || pressed === keycode.UP) {
+				} else if (pressed === LEFT || pressed === UP) {
 					this.focusLastTab();
-				} else if (pressed === keycode.RIGHT || pressed === keycode.DOWN) {
+				} else if (pressed === RIGHT || pressed === DOWN) {
 					this.focusFirstTab();
 				}
 			}
