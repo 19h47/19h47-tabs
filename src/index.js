@@ -1,4 +1,3 @@
-// import getHighestHeight from 'Utils/getHighestHeight';
 import getHash from 'Utils/getHash';
 import {
 	END,
@@ -45,6 +44,7 @@ export default class Tabs {
 			this.addListeners(i);
 		}
 	}
+	
 
 	/**
 	 * Add listeners
@@ -244,6 +244,7 @@ export default class Tabs {
 			tab.focus();
 		}
 	}
+	
 
 	/**
 	 * Deactivate tabs
@@ -360,6 +361,7 @@ export default class Tabs {
 
 		return this.delay;
 	}
+	
 
 	/**
 	 * Focus event handler
