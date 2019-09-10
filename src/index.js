@@ -1,4 +1,6 @@
 import getHash from 'Utils/getHash';
+import direction from 'Utils/direction';
+
 import {
 	END,
 	HOME,
@@ -9,7 +11,6 @@ import {
 	DOWN,
 	DELETE,
 } from '@19h47/keycode';
-import direction from 'src/direction';
 
 export default class Tabs {
 	constructor(element) {
@@ -19,7 +20,10 @@ export default class Tabs {
 
 		this.tabs = [];
 		this.pannels = [];
-		this.delay = this.determineDelay();
+
+		// Determine whether there should be a delay when user navigates with
+		// the arrow keys, default is false
+		this.delay = this.$tablist.getAttribute('data-delay') || false;
 
 		this.generateArrays();
 
@@ -33,32 +37,37 @@ export default class Tabs {
 	 * @return void
 	 */
 	generateArrays() {
-		this.tabs = this.$tablist.querySelectorAll('[role="tab"]');
-		this.panels = this.$cont.querySelectorAll('[role="tabpanel"]');
+		this.tabs = [...this.$tablist.querySelectorAll('[role="tab"]')];
+		this.panels = [...this.$cont.querySelectorAll('[role="tabpanel"]')];
 	}
 
 
 	init() {
 		// Bind listeners
-		for (let i = 0; i < this.tabs.length; i += 1) {
-			this.addListeners(i);
-		}
+		this.tabs.map((tab, index) => {
+			if (tab.id === this.href) {
+				this.activateTab(tab);
+			}
+
+			return this.addListeners(tab, index);
+		});
 	}
 
 
 	/**
 	 * Add listeners
 	 *
+	 * @param obj DOM object.
 	 * @param int index
 	 */
-	addListeners(index) {
-		this.tabs[index].addEventListener('click', (event) => {
+	addListeners(tab, index) {
+		tab.addEventListener('click', (event) => {
 			this.clickEventListener(event);
 		});
-		this.tabs[index].addEventListener('keydown', (event) => {
+		tab.addEventListener('keydown', (event) => {
 			this.keydownEventListener(event);
 		});
-		this.tabs[index].addEventListener('keyup', (event) => {
+		tab.addEventListener('keyup', (event) => {
 			this.keyupEventListener(event);
 		});
 
@@ -191,8 +200,10 @@ export default class Tabs {
 	switchTabOnArrowPress(event) {
 		const pressed = event.keyCode;
 
-		for (let i = 0; i < this.tabs.length; i += 1) {
-			this.tabs[i].addEventListener('focus', this.focusEventHandler);
+		if (this.delay) {
+			this.tabs.map(tab => tab.addEventListener('focus', (e) => {
+				this.focusEventHandler(e);
+			}));
 		}
 
 		if (direction[pressed]) {
@@ -239,6 +250,8 @@ export default class Tabs {
 
 		tab.classList.add('is-active');
 
+		window.location.hash = tab.id;
+
 		// Set focus when required
 		if (setFocus) {
 			tab.focus();
@@ -254,17 +267,17 @@ export default class Tabs {
 	 * @return void
 	 */
 	deactivateTabs() {
-		for (let i = 0; i < this.tabs.length; i += 1) {
-			this.tabs[i].setAttribute('tabindex', '-1');
-			this.tabs[i].setAttribute('aria-selected', 'false');
-			this.tabs[i].removeEventListener('focus', this.focusEventHandler);
-			this.tabs[i].classList.remove('is-active');
-		}
+		this.tabs.map((tab) => {
+			tab.setAttribute('tabindex', '-1');
+			tab.setAttribute('aria-selected', 'false');
+			tab.removeEventListener('focus', this.focusEventHandler);
+			return tab.classList.remove('is-active');
+		});
 
-		for (let i = 0; i < this.panels.length; i += 1) {
-			this.panels[i].setAttribute('hidden', 'hidden');
-			this.panels[i].classList.remove('is-active');
-		}
+		this.panels.map((panel) => {
+			panel.setAttribute('hidden', 'hidden');
+			return panel.classList.remove('is-active');
+		});
 	}
 
 
@@ -342,28 +355,6 @@ export default class Tabs {
 
 
 	/**
-	 * Determine delay
-	 *
-	 * Determine whether there should be a delay when user navigates with the
-	 * arrow keys
-	 *
-	 * @return delay
-	 */
-	determineDelay() {
-		const hasDelay = this.$tablist.hasAttribute('data-delay');
-		this.delay = 0;
-
-		if (hasDelay) {
-			const delayValue = this.$tablist.getAttribute('data-delay');
-			// If no value is specified, default to 300ms
-			this.delay = delayValue || 300;
-		}
-
-		return this.delay;
-	}
-
-
-	/**
 	 * Focus event handler
 	 *
 	 * @param  obj event
@@ -372,7 +363,9 @@ export default class Tabs {
 	focusEventHandler(event) {
 		const { target } = event;
 
-		setTimeout(this.checkTabFocus, this.delay, target);
+		setTimeout(() => {
+			this.checkTabFocus(target);
+		}, this.delay);
 	}
 
 

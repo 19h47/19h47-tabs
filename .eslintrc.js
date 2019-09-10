@@ -26,5 +26,12 @@ module.exports = {
 		sourceType: 'module',
 		allowImportExportEverywhere: true,
 		codeFrame: false
-	}
+	},
+	settings: {
+		"import/resolver": {
+			webpack: {
+				config: 'config/webpack.common.js'
+			},
+		}
+	},
 };
