@@ -54,7 +54,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin({
-			cleanOnceBeforeBuildPatterns: ['dist', 'docs'],
+			cleanOnceBeforeBuildPatterns: [resolve('dist'), resolve('docs')],
 		}),
 		new HtmlWebpackPlugin({
 			filename: resolve('docs/index.html' ),
