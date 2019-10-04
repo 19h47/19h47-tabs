@@ -102,30 +102,20 @@ export default class Tabs {
 	keydownEventListener(event) {
 		const key = event.keyCode;
 
-		switch (key) {
-			case END:
+		const codes = {
+			[END]: () => {
 				event.preventDefault();
-
-				// Activate last tab
 				this.activateTab(this.tabs[this.tabs.length - 1]);
-				break;
-
-			case HOME:
+			},
+			[HOME]: () => {
 				event.preventDefault();
-
-				// Activate first tab
 				this.activateTab(this.tabs[0]);
-				break;
+			},
+			[UP]: () => this.determineOrientation(event),
+			[DOWN]: () => this.determineOrientation(event),
+		};
 
-			// Up and down are in keydown because we need to prevent page scroll >:)
-			case UP:
-			case DOWN:
-				this.determineOrientation(event);
-				break;
-
-			default:
-				break;
-		}
+		return codes[key]();
 	}
 
 
