@@ -113,9 +113,10 @@ export default class Tabs {
 			},
 			[UP]: () => this.determineOrientation(event),
 			[DOWN]: () => this.determineOrientation(event),
+			default: () => false,
 		};
 
-		return codes[key]();
+		return (codes[key] || codes.default)();
 	}
 
 
@@ -130,24 +131,17 @@ export default class Tabs {
 	keyupEventListener(event) {
 		const key = event.keyCode;
 		const { target } = event;
+		const selected = JSON.parse(target.getAttribute('aria-selected'));
 
-		switch (key) {
-			case LEFT:
-			case RIGHT:
-				this.determineOrientation(event);
-				break;
+		const codes = {
+			[LEFT]: () => this.determineOrientation(event),
+			[RIGHT]: () => this.determineOrientation(event),
+			[DELETE]: () => selected && this.determineDeletable(event),
+			[BACKSPACE]: () => selected && this.determineDeletable(event),
+			default: () => false,
+		};
 
-			case DELETE:
-			case BACKSPACE:
-				// If tab is active
-				if ('true' === target.getAttribute('aria-selected')) {
-					this.determineDeletable(event);
-				}
-				break;
-
-			default:
-				break;
-		}
+		return (codes[key] || codes.default)();
 	}
 
 
