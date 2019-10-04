@@ -11,10 +11,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/19h47/19h47-tabs.git"
+        "url": "git://github.com/19h47/19h47-tabs.git"
     },
     "publishConfig": {
-        "registry": "https://npm.pkg.github.com/19h47"
+        "registry": "https://npm.pkg.github.com/"
     },
     "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
     "license": "ISC",
