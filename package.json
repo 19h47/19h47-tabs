@@ -1,6 +1,6 @@
 {
     "name": "@19h47/tabs",
-    "version": "4.0.2",
+    "version": "4.1.1",
     "description": "Tabs",
     "main": "dist/main.js",
     "scripts": {
@@ -19,11 +19,11 @@
     "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
     "license": "ISC",
     "devDependencies": {
-        "@babel/core": "^7.6.2",
+        "@babel/core": "^7.6.4",
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
         "@babel/plugin-transform-runtime": "^7.6.2",
-        "@babel/preset-env": "^7.6.2",
-        "@babel/runtime": "^7.6.2",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/runtime": "^7.6.3",
         "babel-eslint": "^10.0.3",
         "babel-loader": "^8.0.6",
         "clean-webpack-plugin": "^3.0.0",
@@ -37,7 +37,7 @@
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-standard": "^4.0.1",
         "html-webpack-plugin": "^3.2.0",
-        "webpack": "^4.41.0",
+        "webpack": "^4.41.1",
         "webpack-cli": "^3.3.9",
         "webpack-dev-server": "^3.8.2",
         "webpack-merge": "^4.2.2",

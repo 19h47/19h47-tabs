@@ -12,9 +12,14 @@ import {
 	DELETE,
 } from '@19h47/keycode';
 
+const DEFAULTS = {
+	hash: true,
+};
+
 export default class Tabs {
-	constructor(element) {
+	constructor(element, options = {}) {
 		this.$cont = element;
+		this.options = Object.assign(DEFAULTS, options);
 
 		this.$tablist = this.$cont.querySelector('[role="tablist"]');
 
@@ -27,7 +32,7 @@ export default class Tabs {
 
 		this.generateArrays();
 
-		this.href = getHash(window.location.href);
+		this.href = this.options.hash && getHash(window.location.href);
 	}
 
 
@@ -45,7 +50,7 @@ export default class Tabs {
 	init() {
 		// Bind listeners
 		this.tabs.map((tab, index) => {
-			if (tab.id === this.href) {
+			if (this.href && tab.id === this.href) {
 				this.activateTab(tab);
 			}
 
@@ -234,7 +239,9 @@ export default class Tabs {
 
 		tab.classList.add('is-active');
 
-		window.location.hash = tab.id;
+		if (this.options.hash) {
+			window.location.hash = tab.id;
+		}
 
 		// Set focus when required
 		if (setFocus) {
