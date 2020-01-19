@@ -10,6 +10,13 @@ npm install @19h47/tabs
 
 ## Usage
 
+```js
+const $element = document.querySelector('.js-tabs');
+const tabs = new Tabs($element);
+tabs.init();
+
+```
+
 ### Tablist
 
 The element that serves as a container for the set of tabs. The `role="tablist"` attribute is required.  
@@ -51,7 +58,7 @@ Since an HTML button element is used for the tab, it is not necessary to set `ta
 
 Is the tabulation deletable ? You can set up this option by adding the `data-deletable` attribute on button.
 
-To active the button on first load, simply add a `is-active` class to the button, remove the `tabindex` attribute and switch to `true` the `aria-selected` attribute.
+To active the button on first load, add a `is-active` class to the button, remove the `tabindex` attribute and switch to `true` the `aria-selected` attribute.
 
 ### Tabpanel
 
