@@ -2,13 +2,13 @@ import getHash from 'Utils/getHash';
 import direction from 'Utils/direction';
 
 import {
-	END,
-	HOME,
-	LEFT,
-	UP,
-	RIGHT,
 	BACKSPACE,
-	DOWN,
+	HOME,
+	END,
+	ARROW_RIGHT,
+	ARROW_LEFT,
+	PAGE_UP,
+	PAGE_DOWN,
 	DELETE,
 } from '@19h47/keycode';
 
@@ -33,6 +33,11 @@ export default class Tabs {
 		this.generateArrays();
 
 		this.href = this.options.hash && getHash(window.location.href);
+
+		// Bind.
+		this.onKeydown = this.onKeydown.bind(this);
+		this.onKeyup = this.onKeyup.bind(this);
+		this.onClick = this.onClick.bind(this);
 	}
 
 
@@ -66,15 +71,9 @@ export default class Tabs {
 	 * @param int index
 	 */
 	addListeners(tab, index) {
-		tab.addEventListener('click', (event) => {
-			this.clickEventListener(event);
-		});
-		tab.addEventListener('keydown', (event) => {
-			this.keydownEventListener(event);
-		});
-		tab.addEventListener('keyup', (event) => {
-			this.keyupEventListener(event);
-		});
+		tab.addEventListener('click', this.onClick);
+		tab.addEventListener('keydown', this.onKeydown);
+		tab.addEventListener('keyup', this.onKeyup);
 
 		// Build an array with all tabs (<button>s) in it
 		this.tabs[index].index = index;
@@ -89,7 +88,7 @@ export default class Tabs {
 	 * @param  obj event
 	 * @return void
 	 */
-	clickEventListener(event) {
+	onClick(event) {
 		const tab = event.target;
 
 		this.activateTab(tab, false);
@@ -104,8 +103,8 @@ export default class Tabs {
 	 * @param  obj event
 	 * @return void
 	 */
-	keydownEventListener(event) {
-		const key = event.keyCode;
+	onKeydown(event) {
+		const { keyCode: key } = event;
 
 		const codes = {
 			[END]: () => {
@@ -116,8 +115,8 @@ export default class Tabs {
 				event.preventDefault();
 				this.activateTab(this.tabs[0]);
 			},
-			[UP]: () => this.determineOrientation(event),
-			[DOWN]: () => this.determineOrientation(event),
+			[PAGE_UP]: () => this.determineOrientation(event),
+			[PAGE_DOWN]: () => this.determineOrientation(event),
 			default: () => false,
 		};
 
@@ -130,17 +129,18 @@ export default class Tabs {
 	 *
 	 * Handle keyup on tabs
 	 *
-	 * @param  obj event
+	 * @param {object} event
 	 * @return void
 	 */
-	keyupEventListener(event) {
-		const key = event.keyCode;
-		const { target } = event;
+	onKeyup(event) {
+		const { keyCode: key, target } = event;
 		const selected = JSON.parse(target.getAttribute('aria-selected'));
 
+		// console.log(key, ARROW_RIGHT);
+
 		const codes = {
-			[LEFT]: () => this.determineOrientation(event),
-			[RIGHT]: () => this.determineOrientation(event),
+			[ARROW_LEFT]: () => this.determineOrientation(event),
+			[ARROW_RIGHT]: () => this.determineOrientation(event),
 			[DELETE]: () => selected && this.determineDeletable(event),
 			[BACKSPACE]: () => selected && this.determineDeletable(event),
 			default: () => false,
@@ -160,14 +160,16 @@ export default class Tabs {
 	 * @param obj event
 	 */
 	determineOrientation(event) {
-		const key = event.keyCode;
+		// console.info('tabs.determineOrientation');
+
+		const { keyCode: key } = event;
 		const vertical = 'vertical' === this.$tablist.getAttribute('aria-orientation');
 		let proceed = false;
 
-		if (vertical && (key === UP || key === DOWN)) {
+		if (vertical && (key === PAGE_UP || key === PAGE_DOWN)) {
 			event.preventDefault();
 			proceed = true;
-		} else if (key === LEFT || key === RIGHT) {
+		} else if (key === ARROW_LEFT || key === ARROW_RIGHT) {
 			proceed = true;
 		}
 
@@ -187,7 +189,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	switchTabOnArrowPress(event) {
-		const pressed = event.keyCode;
+		const { target, keyCode: key } = event;
 
 		if (this.delay) {
 			this.tabs.map(tab => tab.addEventListener('focus', (e) => {
@@ -195,15 +197,13 @@ export default class Tabs {
 			}));
 		}
 
-		if (direction[pressed]) {
-			const { target } = event;
-
+		if (direction[key]) {
 			if (target.index !== undefined) {
-				if (this.tabs[target.index + direction[pressed]]) {
-					this.tabs[target.index + direction[pressed]].focus();
-				} else if (pressed === LEFT || pressed === UP) {
+				if (this.tabs[target.index + direction[key]]) {
+					this.tabs[target.index + direction[key]].focus();
+				} else if (key === ARROW_LEFT || key === PAGE_UP) {
 					this.focusLastTab();
-				} else if (pressed === RIGHT || pressed === DOWN) {
+				} else if (key === ARROW_RIGHT || key === PAGE_DOWN) {
 					this.focusFirstTab();
 				}
 			}
@@ -312,7 +312,7 @@ export default class Tabs {
 		}
 
 		// Delete target tab
-		this.deleteTab(event, target);
+		this.delete(event, target);
 
 		// Update arrays related to tabs widget
 		this.generateArrays();
@@ -336,7 +336,7 @@ export default class Tabs {
 	 * @param  obj event
 	 * @return
 	 */
-	deleteTab(event) {
+	delete(event) {
 		const { target } = event;
 		const panel = this.$cont.querySelector(`#${target.getAttribute('aria-controls')}`);
 

@@ -5,12 +5,15 @@
 ## Installation
 
 ```
-npm install @19h47/tabs
+yarn add @19h47/tabs
 ```
 
 ## Usage
 
 ```js
+
+import Tabs from '@19h47/tabs';
+
 const $element = document.querySelector('.js-tabs');
 const tabs = new Tabs($element);
 tabs.init();
@@ -39,7 +42,9 @@ The `aria-label=""` attribute provides a label that describes the purpose of the
 You can change the tablist orientation with the attribute `aria-orientation` on the `tablist` element:
 
 ```html
+
 <ul role="tablist" aria-orientation="vertical"></ul>
+
 ```
 
 ### Tab
@@ -47,7 +52,11 @@ You can change the tablist orientation with the attribute `aria-orientation` on 
 An element in the tab list that serves as a label for one of the tab panels and can be activated to display that panel.
 
 ```html
-<button type="button" role="tab" aria-selected="false" aria-controls="foo-tab" id="foo" tabindex="-1">Project</button>
+
+<button type="button" role="tab" aria-selected="false" aria-controls="foo-tab" id="foo" tabindex="-1">
+	Project
+</button>
+
 ```
 
 The `role="tab"` attribute is required.
@@ -65,9 +74,11 @@ To active the button on first load, add a `is-active` class to the button, remov
 The element that contains the content associated with a tab.
 
 ```html
+
 <section tabindex="0" role="tabpanel" aria-labelledby="foo" id="foo-tab">
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil hic, vero. Fugiat voluptas ex consequatur hic nemo officia iure placeat non, pariatur, dolore natus nobis, tempore dolores dicta nisi inventore.</p>
 </section>
+
 ```
 
 To active panel on first load, add a `ìs-active` class to it.
