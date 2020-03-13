@@ -81,7 +81,7 @@ The element that contains the content associated with a tab.
 
 ```
 
-To active panel on first load, add a `ìs-active` class to it.
+To active panel on first load, add a `is-active` class to it.
 
 ## Keyboard support
 
