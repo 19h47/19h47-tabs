@@ -192,7 +192,7 @@ export default class Tabs {
 		const { target, keyCode: key } = event;
 
 		if (this.delay) {
-			this.tabs.map(tab => tab.addEventListener('focus', (e) => {
+			this.tabs.map(tab => tab.addEventListener('focus', e => {
 				this.focusEventHandler(e);
 			}));
 		}
@@ -258,14 +258,14 @@ export default class Tabs {
 	 * @return void
 	 */
 	deactivateTabs() {
-		this.tabs.map((tab) => {
+		this.tabs.map(tab => {
 			tab.setAttribute('tabindex', '-1');
 			tab.setAttribute('aria-selected', 'false');
 			tab.removeEventListener('focus', this.focusEventHandler);
 			return tab.classList.remove('is-active');
 		});
 
-		this.panels.map((panel) => {
+		this.panels.map(panel => {
 			panel.setAttribute('hidden', 'hidden');
 			return panel.classList.remove('is-active');
 		});
