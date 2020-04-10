@@ -82,7 +82,8 @@ export default class Tabs {
 	 * @return void
 	 */
 	onClick(event) {
-		const tab = event.target;
+		// console.log('Tabs.onClick');
+		const { target: tab } = event;
 
 		this.activateTab(tab, false);
 	}
@@ -96,6 +97,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	onKeydown(event) {
+		// console.log('Tabs.onKeydown');
 		const { keyCode: key } = event;
 
 		const codes = {
@@ -127,8 +129,6 @@ export default class Tabs {
 		const { keyCode: key, target } = event;
 		const selected = JSON.parse(target.getAttribute('aria-selected'));
 
-		// console.log(key, ARROW_RIGHT);
-
 		const codes = {
 			[ARROW_LEFT]: () => this.determineOrientation(event),
 			[ARROW_RIGHT]: () => this.determineOrientation(event),
@@ -150,7 +150,7 @@ export default class Tabs {
 	 * @param obj event
 	 */
 	determineOrientation(event) {
-		// console.info('tabs.determineOrientation');
+		// console.info('Tabs.determineOrientation');
 
 		const { keyCode: key } = event;
 		const vertical = 'vertical' === this.$tablist.getAttribute('aria-orientation');
@@ -174,10 +174,11 @@ export default class Tabs {
 	 * Either focus the next, previous, first, or last tab depening on key
 	 * pressed
 	 *
-	 * @param  obj event
+	 * @param  {object} event
 	 * @return void
 	 */
 	switchTabOnArrowPress(event) {
+		// console.info('Tabs.switchTabOnArrowPress');
 		const { target, keyCode: key } = event;
 
 		if (this.options.delay) {
@@ -211,11 +212,17 @@ export default class Tabs {
 	 * @return void
 	 */
 	activateTab(tab, setFocus = true) {
+		// console.info('Tabs.activateTab');
+
+		if (tab.matches('.is-active')) {
+			return;
+		}
+
 		// Deactivate all other tabs
 		this.deactivateTabs();
 
 		// Remove tabindex attribute
-		tab.removeAttribute('tabindex');
+		tab.setAttribute('tabindex', 0);
 
 		// Set the tab as selected
 		tab.setAttribute('aria-selected', 'true');
@@ -291,6 +298,7 @@ export default class Tabs {
 	 * @return bool
 	 */
 	determineDeletable(event) {
+		// console.info('Tabs.determineDeletable');
 		const { target } = event;
 
 		if (null === target.getAttribute('data-deletable')) {
@@ -336,6 +344,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	focusEventHandler(event) {
+		// console.info('Tabs.focusEventHandler');
 		const { target: $target } = event;
 
 		setTimeout(() => {
@@ -353,6 +362,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	checkTabFocus($target) {
+		// console.info('Tabs.checkTabFocus');
 		const focused = document.activeElement;
 
 		if ($target === focused) {
