@@ -1,47 +1,49 @@
 {
-    "name": "@19h47/tabs",
-    "version": "4.1.5",
-    "description": "Tabs",
-    "main": "dist/main.js",
-    "scripts": {
-        "prod": "./bin/production",
-        "dev": "./bin/development",
-        "deploy": "./bin/deploy",
-        "start": "./bin/start"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/19h47/19h47-tabs.git"
-    },
-    "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
-    "license": "ISC",
-    "devDependencies": {
-        "@babel/core": "^7.8.7",
-        "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-        "@babel/plugin-transform-runtime": "^7.7.6",
-        "@babel/preset-env": "^7.8.7",
-        "@babel/runtime": "^7.8.7",
-        "babel-eslint": "^10.1.0",
-        "babel-loader": "^8.0.6",
-        "clean-webpack-plugin": "^3.0.0",
-        "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.1.0",
-        "eslint-config-standard": "^14.1.0",
-        "eslint-import-resolver-webpack": "^0.12.1",
-        "eslint-loader": "^3.0.3",
-        "eslint-plugin-import": "^2.18.2",
-        "eslint-plugin-node": "^11.0.0",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-standard": "^4.0.1",
-        "html-webpack-plugin": "^3.2.0",
-        "webpack": "^4.42.0",
-        "webpack-cli": "^3.3.10",
-        "webpack-dev-server": "^3.9.0",
-        "webpack-merge": "^4.2.2",
-        "webpack-notifier": "^1.8.0"
-    },
-    "dependencies": {
-        "@19h47/keycode": "3.0.0",
-        "core-js": "^3.6.4"
-    }
+	"name": "@19h47/tabs",
+	"version": "4.1.5",
+	"description": "Tabs",
+	"main": "dist/main.js",
+	"scripts": {
+		"prod": "./bin/production",
+		"dev": "./bin/development",
+		"deploy": "./bin/deploy",
+		"start": "./bin/start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/19h47/19h47-tabs.git"
+	},
+	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+	"license": "ISC",
+	"devDependencies": {
+		"@19h47/prettier-config": "19h47/prettier-config",
+		"@babel/core": "^7.9.0",
+		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
+		"@babel/plugin-transform-runtime": "^7.9.0",
+		"@babel/preset-env": "^7.9.5",
+		"@babel/runtime": "^7.9.2",
+		"babel-eslint": "^10.1.0",
+		"babel-loader": "^8.1.0",
+		"clean-webpack-plugin": "^3.0.0",
+		"core-js": "^3.6.5",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.1.0",
+		"eslint-config-standard": "^14.1.1",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-import-resolver-webpack": "^0.12.1",
+		"eslint-loader": "^4.0.0",
+		"eslint-plugin-import": "^2.20.2",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
+		"html-webpack-plugin": "^4.2.0",
+		"webpack": "^4.42.1",
+		"webpack-cli": "^3.3.10",
+		"webpack-dev-server": "^3.9.0",
+		"webpack-merge": "^4.2.2",
+		"webpack-notifier": "^1.8.0"
+	},
+	"dependencies": {
+		"@19h47/keycode": "3.0.0"
+	}
 }

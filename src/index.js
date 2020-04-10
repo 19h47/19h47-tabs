@@ -19,16 +19,13 @@ const DEFAULTS = {
 export default class Tabs {
 	constructor(element, options = {}) {
 		this.$cont = element;
-		this.options = Object.assign(DEFAULTS, options);
+
+		this.options = { ...DEFAULTS, ...options };
 
 		this.$tablist = this.$cont.querySelector('[role="tablist"]');
 
 		this.tabs = [];
 		this.pannels = [];
-
-		// Determine whether there should be a delay when user navigates with
-		// the arrow keys, default is false
-		this.delay = this.$tablist.getAttribute('data-delay') || false;
 
 		this.generateArrays();
 
@@ -40,7 +37,6 @@ export default class Tabs {
 		this.onClick = this.onClick.bind(this);
 	}
 
-
 	/**
 	 * Generate arrays
 	 *
@@ -50,7 +46,6 @@ export default class Tabs {
 		this.tabs = [...this.$tablist.querySelectorAll('[role="tab"]')];
 		this.panels = [...this.$cont.querySelectorAll('[role="tabpanel"]')];
 	}
-
 
 	init() {
 		// Bind listeners
@@ -62,7 +57,6 @@ export default class Tabs {
 			return this.addListeners(tab, index);
 		});
 	}
-
 
 	/**
 	 * Add listeners
@@ -79,7 +73,6 @@ export default class Tabs {
 		this.tabs[index].index = index;
 	}
 
-
 	/**
 	 * Click event listener
 	 *
@@ -93,7 +86,6 @@ export default class Tabs {
 
 		this.activateTab(tab, false);
 	}
-
 
 	/**
 	 * Keydown event listener
@@ -123,7 +115,6 @@ export default class Tabs {
 		return (codes[key] || codes.default)();
 	}
 
-
 	/**
 	 * Keyup event listener
 	 *
@@ -148,7 +139,6 @@ export default class Tabs {
 
 		return (codes[key] || codes.default)();
 	}
-
 
 	/**
 	 * Determine orientation
@@ -178,7 +168,6 @@ export default class Tabs {
 		}
 	}
 
-
 	/**
 	 * Switch tab on arrow press
 	 *
@@ -191,10 +180,12 @@ export default class Tabs {
 	switchTabOnArrowPress(event) {
 		const { target, keyCode: key } = event;
 
-		if (this.delay) {
-			this.tabs.map(tab => tab.addEventListener('focus', e => {
-				this.focusEventHandler(e);
-			}));
+		if (this.options.delay) {
+			this.tabs.map(tab =>
+				tab.addEventListener('focus', e => {
+					this.focusEventHandler(e);
+				}),
+			);
 		}
 
 		if (direction[key]) {
@@ -209,7 +200,6 @@ export default class Tabs {
 			}
 		}
 	}
-
 
 	/**
 	 * Activate tab
@@ -249,7 +239,6 @@ export default class Tabs {
 		}
 	}
 
-
 	/**
 	 * Deactivate tabs
 	 *
@@ -271,7 +260,6 @@ export default class Tabs {
 		});
 	}
 
-
 	/**
 	 * Focus first tab
 	 *
@@ -283,7 +271,6 @@ export default class Tabs {
 		return this.tabs[0].focus();
 	}
 
-
 	/**
 	 * Focus last tab
 	 *
@@ -294,7 +281,6 @@ export default class Tabs {
 	focusLastTab() {
 		return this.tabs[this.tabs.length - 1].focus();
 	}
-
 
 	/**
 	 * Determine deletable
@@ -327,7 +313,6 @@ export default class Tabs {
 		return true;
 	}
 
-
 	/**
 	 * Delete tab
 	 *
@@ -344,7 +329,6 @@ export default class Tabs {
 		panel.parentElement.removeChild(panel);
 	}
 
-
 	/**
 	 * Focus event handler
 	 *
@@ -352,27 +336,27 @@ export default class Tabs {
 	 * @return void
 	 */
 	focusEventHandler(event) {
-		const { target } = event;
+		const { target: $target } = event;
 
 		setTimeout(() => {
-			this.checkTabFocus(target);
-		}, this.delay);
+			this.checkTabFocus($target);
+		}, this.options.delay);
 	}
-
 
 	/**
 	 * Check tab focus
 	 *
 	 * Only activate tab on focus if it still has focus after the delay
 	 *
-	 * @param  obj target
+	 * @param  {object} $target
+	 *
 	 * @return void
 	 */
-	checkTabFocus(target) {
+	checkTabFocus($target) {
 		const focused = document.activeElement;
 
-		if (target === focused) {
-			this.activateTab(target, false);
+		if ($target === focused) {
+			this.activateTab($target, false);
 		}
 	}
 }
