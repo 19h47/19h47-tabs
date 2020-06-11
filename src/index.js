@@ -1,3 +1,6 @@
+import { defaults } from '@/config';
+import TabPanel from '@/TabPanel';
+import Tab from '@/Tab';
 import getHash from 'Utils/getHash';
 import direction from 'Utils/direction';
 
@@ -12,26 +15,22 @@ import {
 	DELETE,
 } from '@19h47/keycode';
 
-const DEFAULTS = {
-	hash: true,
-};
-
 export default class Tabs {
 	constructor(element, options = {}) {
-		this.$cont = element;
+		this.rootElement = element;
 
-		this.options = { ...DEFAULTS, ...options };
+		this.$tabList = this.rootElement.querySelector('[role="tablist"]');
 
-		this.$tablist = this.$cont.querySelector('[role="tablist"]');
+		this.options = { ...defaults, ...options };
+		this.options.orientation = 'vertical' === this.$tabList.getAttribute('aria-orientation');
 
 		this.tabs = [];
-		this.pannels = [];
+		this.tabPanels = [];
 
 		this.generateArrays();
 
 		this.href = this.options.hash && getHash(window.location.href);
 
-		// Bind.
 		this.onKeydown = this.onKeydown.bind(this);
 		this.onKeyup = this.onKeyup.bind(this);
 		this.onClick = this.onClick.bind(this);
@@ -43,34 +42,30 @@ export default class Tabs {
 	 * @return void
 	 */
 	generateArrays() {
-		this.tabs = [...this.$tablist.querySelectorAll('[role="tab"]')];
-		this.panels = [...this.$cont.querySelectorAll('[role="tabpanel"]')];
+		const tabs = [...this.$tabList.querySelectorAll('[role="tab"]')];
+		const tabPanels = [...this.rootElement.querySelectorAll('[role="tabpanel"]')];
+
+		this.tabs = tabs.map(($element, index) => new Tab($element, index));
+		this.tabPanels = tabPanels.map($element => new TabPanel($element));
 	}
 
 	init() {
-		// Bind listeners
-		this.tabs.map((tab, index) => {
+		this.tabs.map(tab => {
 			if (this.href && tab.id === this.href) {
 				this.activateTab(tab);
 			}
 
-			return this.addListeners(tab, index);
+			tab.rootElement.addEventListener('click', this.onClick);
+
+			return true;
 		});
+
+		this.initEvents();
 	}
 
-	/**
-	 * Add listeners
-	 *
-	 * @param obj DOM object.
-	 * @param int index
-	 */
-	addListeners(tab, index) {
-		tab.addEventListener('click', this.onClick);
-		tab.addEventListener('keydown', this.onKeydown);
-		tab.addEventListener('keyup', this.onKeyup);
-
-		// Build an array with all tabs (<button>s) in it
-		this.tabs[index].index = index;
+	initEvents() {
+		this.$tabList.addEventListener('keyup', this.onKeyup);
+		this.$tabList.addEventListener('keydown', this.onKeydown);
 	}
 
 	/**
@@ -83,9 +78,10 @@ export default class Tabs {
 	 */
 	onClick(event) {
 		// console.log('Tabs.onClick');
-		const { target: tab } = event;
 
-		this.activateTab(tab, false);
+		const { target } = event;
+
+		this.activateTab(this.tabs[target.index], false);
 	}
 
 	/**
@@ -98,6 +94,7 @@ export default class Tabs {
 	 */
 	onKeydown(event) {
 		// console.log('Tabs.onKeydown');
+
 		const { keyCode: key } = event;
 
 		const codes = {
@@ -126,6 +123,8 @@ export default class Tabs {
 	 * @return void
 	 */
 	onKeyup(event) {
+		// console.log('Tabs.onKeyup');
+
 		const { keyCode: key, target } = event;
 		const selected = JSON.parse(target.getAttribute('aria-selected'));
 
@@ -153,7 +152,7 @@ export default class Tabs {
 		// console.info('Tabs.determineOrientation');
 
 		const { keyCode: key } = event;
-		const vertical = 'vertical' === this.$tablist.getAttribute('aria-orientation');
+		const { orientation: vertical } = this.options;
 		let proceed = false;
 
 		if (vertical && (key === PAGE_UP || key === PAGE_DOWN)) {
@@ -183,21 +182,19 @@ export default class Tabs {
 
 		if (this.options.delay) {
 			this.tabs.map(tab =>
-				tab.addEventListener('focus', e => {
+				tab.rootElement.addEventListener('focus', e => {
 					this.focusEventHandler(e);
 				}),
 			);
 		}
 
-		if (direction[key]) {
-			if (target.index !== undefined) {
-				if (this.tabs[target.index + direction[key]]) {
-					this.tabs[target.index + direction[key]].focus();
-				} else if (key === ARROW_LEFT || key === PAGE_UP) {
-					this.focusLastTab();
-				} else if (key === ARROW_RIGHT || key === PAGE_DOWN) {
-					this.focusFirstTab();
-				}
+		if (direction[key] && target.index !== undefined) {
+			if (this.tabs[target.index + direction[key]]) {
+				this.tabs[target.index + direction[key]].focus();
+			} else if (key === ARROW_LEFT || key === PAGE_UP) {
+				this.tabs[this.tabs.length - 1].focus();
+			} else if (key === ARROW_RIGHT || key === PAGE_DOWN) {
+				this.tabs[0].focus();
 			}
 		}
 	}
@@ -214,27 +211,19 @@ export default class Tabs {
 	activateTab(tab, setFocus = true) {
 		// console.info('Tabs.activateTab');
 
-		if (tab.matches('.is-active')) {
+		if (tab.rootElement.matches('.is-active')) {
 			return;
 		}
 
-		// Deactivate all other tabs
 		this.deactivateTabs();
+		this.deactivateTabPanels();
 
-		// Remove tabindex attribute
-		tab.setAttribute('tabindex', 0);
-
-		// Set the tab as selected
-		tab.setAttribute('aria-selected', 'true');
+		tab.activate();
 
 		// Get the value of aria-controls (which is an ID)
-		const controls = tab.getAttribute('aria-controls');
+		const controls = tab.rootElement.getAttribute('aria-controls');
 
-		// Remove hidden attribute from tab panel to make it visible
-		this.$cont.querySelector(`#${controls}`).removeAttribute('hidden');
-		this.$cont.querySelector(`#${controls}`).classList.add('is-active');
-
-		tab.classList.add('is-active');
+		this.tabPanels.find(tabPanel => tabPanel.id === controls).activate();
 
 		if (this.options.hash) {
 			window.location.hash = tab.id;
@@ -254,39 +243,11 @@ export default class Tabs {
 	 * @return void
 	 */
 	deactivateTabs() {
-		this.tabs.map(tab => {
-			tab.setAttribute('tabindex', '-1');
-			tab.setAttribute('aria-selected', 'false');
-			tab.removeEventListener('focus', this.focusEventHandler);
-			return tab.classList.remove('is-active');
-		});
-
-		this.panels.map(panel => {
-			panel.setAttribute('hidden', 'hidden');
-			return panel.classList.remove('is-active');
-		});
+		this.tabs.map(tab => tab.deactivate());
 	}
 
-	/**
-	 * Focus first tab
-	 *
-	 * Make a guess
-	 *
-	 * @return
-	 */
-	focusFirstTab() {
-		return this.tabs[0].focus();
-	}
-
-	/**
-	 * Focus last tab
-	 *
-	 * Make a guess
-	 *
-	 * @return
-	 */
-	focusLastTab() {
-		return this.tabs[this.tabs.length - 1].focus();
+	deactivateTabPanels() {
+		this.tabPanels.map(tabPanel => tabPanel.deactivate());
 	}
 
 	/**
@@ -294,8 +255,8 @@ export default class Tabs {
 	 *
 	 * Detect if a tab is deletable
 	 *
-	 * @param  obj event
-	 * @return bool
+	 * @param  {object} event
+	 * @return {boolean}
 	 */
 	determineDeletable(event) {
 		// console.info('Tabs.determineDeletable');
@@ -305,8 +266,8 @@ export default class Tabs {
 			return false;
 		}
 
-		// Delete target tab
-		this.delete(event, target);
+		this.tabs[target.index].delete();
+		this.tabPanels[target.index].delete();
 
 		// Update arrays related to tabs widget
 		this.generateArrays();
@@ -322,33 +283,18 @@ export default class Tabs {
 	}
 
 	/**
-	 * Delete tab
-	 *
-	 * Deletes a tab and its panel
-	 *
-	 * @param  obj event
-	 * @return
-	 */
-	delete(event) {
-		const { target } = event;
-		const panel = this.$cont.querySelector(`#${target.getAttribute('aria-controls')}`);
-
-		target.parentElement.removeChild(target);
-		panel.parentElement.removeChild(panel);
-	}
-
-	/**
 	 * Focus event handler
 	 *
-	 * @param  obj event
+	 * @param  {object} event
 	 * @return void
 	 */
 	focusEventHandler(event) {
 		// console.info('Tabs.focusEventHandler');
-		const { target: $target } = event;
+
+		const { target } = event;
 
 		setTimeout(() => {
-			this.checkTabFocus($target);
+			this.checkTabFocus(target);
 		}, this.options.delay);
 	}
 
@@ -357,16 +303,16 @@ export default class Tabs {
 	 *
 	 * Only activate tab on focus if it still has focus after the delay
 	 *
-	 * @param  {object} $target
-	 *
+	 * @param  {object} target
 	 * @return void
 	 */
-	checkTabFocus($target) {
+	checkTabFocus(target) {
 		// console.info('Tabs.checkTabFocus');
+
 		const focused = document.activeElement;
 
-		if ($target === focused) {
-			this.activateTab($target, false);
+		if (target === focused) {
+			this.activateTab(this.tabs[target.index], false);
 		}
 	}
 }

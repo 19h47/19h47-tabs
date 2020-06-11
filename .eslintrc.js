@@ -15,6 +15,7 @@ module.exports = {
 		'no-param-reassign': ['error', { props: false }],
 		yoda: [2, 'always'],
 		'import/no-named-as-default': 0,
+		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 	},
 	parser: 'babel-eslint',
 	parserOptions: {
