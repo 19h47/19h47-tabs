@@ -1,6 +1,4 @@
-const defaults = {
-	hash: true,
-	delay: 0,
-};
+const hash = true;
+const delay = 0;
 
-export { defaults }; // eslint-disable-line
+export { hash, delay };

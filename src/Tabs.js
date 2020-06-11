@@ -1,4 +1,4 @@
-import { defaults } from '@/config';
+import { hash, delay } from '@/config';
 import TabPanel from '@/TabPanel';
 import Tab from '@/Tab';
 import getHash from 'Utils/getHash';
@@ -15,6 +15,8 @@ import {
 	DELETE,
 } from '@19h47/keycode';
 
+const defaults = { hash, delay };
+
 export default class Tabs {
 	constructor(element, options = {}) {
 		this.rootElement = element;
@@ -24,38 +26,38 @@ export default class Tabs {
 		this.options = { ...defaults, ...options };
 		this.options.orientation = 'vertical' === this.$tabList.getAttribute('aria-orientation');
 
-		this.tabs = [];
-		this.tabPanels = [];
-
-		this.generateArrays();
-
-		this.href = this.options.hash && getHash(window.location.href);
-
-		this.onKeydown = this.onKeydown.bind(this);
-		this.onKeyup = this.onKeyup.bind(this);
-		this.onClick = this.onClick.bind(this);
-	}
-
-	/**
-	 * Generate arrays
-	 *
-	 * @return void
-	 */
-	generateArrays() {
 		const tabs = [...this.$tabList.querySelectorAll('[role="tab"]')];
 		const tabPanels = [...this.rootElement.querySelectorAll('[role="tabpanel"]')];
 
 		this.tabs = tabs.map(($element, index) => new Tab($element, index));
 		this.tabPanels = tabPanels.map($element => new TabPanel($element));
+
+		this.href = this.options.hash && getHash(window.location.href);
+
+		this.onKeydown = this.onKeydown.bind(this);
+		this.onKeyup = this.onKeyup.bind(this);
 	}
 
 	init() {
 		this.tabs.map(tab => {
-			if (this.href && tab.id === this.href) {
-				this.activateTab(tab);
-			}
+			tab.init();
 
-			tab.rootElement.addEventListener('click', this.onClick);
+			tab.on('Tab.activate', event => {
+				const { controls } = event;
+
+				this.deactivateTabs();
+				this.deactivateTabPanels();
+
+				this.tabPanels.find(tabPanel => tabPanel.id === controls).activate();
+
+				if (this.options.hash) {
+					window.location.hash = tab.id;
+				}
+			});
+
+			if (this.href && tab.id === this.href) {
+				tab.toggle();
+			}
 
 			return true;
 		});
@@ -66,22 +68,6 @@ export default class Tabs {
 	initEvents() {
 		this.$tabList.addEventListener('keyup', this.onKeyup);
 		this.$tabList.addEventListener('keydown', this.onKeydown);
-	}
-
-	/**
-	 * Click event listener
-	 *
-	 * When a tab is clicked, activateTab is fired to activate it
-	 *
-	 * @param  obj event
-	 * @return void
-	 */
-	onClick(event) {
-		// console.log('Tabs.onClick');
-
-		const { target } = event;
-
-		this.activateTab(this.tabs[target.index], false);
 	}
 
 	/**
@@ -100,11 +86,11 @@ export default class Tabs {
 		const codes = {
 			[END]: () => {
 				event.preventDefault();
-				this.activateTab(this.tabs[this.tabs.length - 1]);
+				this.tabs[this.tabs.length - 1].toggle();
 			},
 			[HOME]: () => {
 				event.preventDefault();
-				this.activateTab(this.tabs[0]);
+				this.tabs[0].toggle();
 			},
 			[PAGE_UP]: () => this.determineOrientation(event),
 			[PAGE_DOWN]: () => this.determineOrientation(event),
@@ -200,45 +186,7 @@ export default class Tabs {
 	}
 
 	/**
-	 * Activate tab
-	 *
-	 * Activates any given tab panel
-	 *
-	 * @param  obj tab
-	 * @param  bool setFocus
-	 * @return void
-	 */
-	activateTab(tab, setFocus = true) {
-		// console.info('Tabs.activateTab');
-
-		if (tab.rootElement.matches('.is-active')) {
-			return;
-		}
-
-		this.deactivateTabs();
-		this.deactivateTabPanels();
-
-		tab.activate();
-
-		// Get the value of aria-controls (which is an ID)
-		const controls = tab.rootElement.getAttribute('aria-controls');
-
-		this.tabPanels.find(tabPanel => tabPanel.id === controls).activate();
-
-		if (this.options.hash) {
-			window.location.hash = tab.id;
-		}
-
-		// Set focus when required
-		if (setFocus) {
-			tab.focus();
-		}
-	}
-
-	/**
 	 * Deactivate tabs
-	 *
-	 * Deactivate all tabs and tab panels
 	 *
 	 * @return void
 	 */
@@ -246,6 +194,11 @@ export default class Tabs {
 		this.tabs.map(tab => tab.deactivate());
 	}
 
+	/**
+	 * Deactivate tab panels
+	 *
+	 * @retur void
+	 */
 	deactivateTabPanels() {
 		this.tabPanels.map(tabPanel => tabPanel.deactivate());
 	}
@@ -260,6 +213,7 @@ export default class Tabs {
 	 */
 	determineDeletable(event) {
 		// console.info('Tabs.determineDeletable');
+
 		const { target } = event;
 
 		if (null === target.getAttribute('data-deletable')) {
@@ -269,14 +223,15 @@ export default class Tabs {
 		this.tabs[target.index].delete();
 		this.tabPanels[target.index].delete();
 
-		// Update arrays related to tabs widget
-		this.generateArrays();
+		//
+		this.tabs.splice(target.index, 1);
+		this.tabPanels.splice(target.index, 1);
 
 		// Activate the closest tab to the one that was just deleted
 		if (0 > target.index - 1) {
-			this.activateTab(this.tabs[0]);
+			this.tabs[0].toggle();
 		} else {
-			this.activateTab(this.tabs[target.index - 1]);
+			this.tabs[target.index - 1].toggle();
 		}
 
 		return true;
@@ -312,7 +267,7 @@ export default class Tabs {
 		const focused = document.activeElement;
 
 		if (target === focused) {
-			this.activateTab(this.tabs[target.index], false);
+			this.tabs[target.index].toggle(false);
 		}
 	}
 }
