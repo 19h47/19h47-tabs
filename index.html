@@ -7,7 +7,9 @@
 		<title>Tabs</title>
 		<link
 			rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+			crossorigin="anonymous"
 		/>
 		<style>
 			.tab-content > .is-active {
@@ -43,252 +45,270 @@
 	<body>
 		<div class="container">
 			<div class="row">
-				<div class="col-12">
-					<h1 class="my-5">
+				<div class="col-12 my-5">
+					<h1 class="m-0">
 						<a href="https://github.com/19h47/19h47-tabs">
 							Tabs
 						</a>
 					</h1>
 				</div>
-				<div class="col-12">
-					<h2>Selection doesn't automatically follow focus</h2>
-					<div class="js-tabs p-3" data-hash="false">
-						<ul class="nav nav-tabs mb-3" role="tablist">
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link is-active"
-									role="tab"
-									aria-selected="true"
-									aria-controls="home-tab"
-									id="home"
-								>
-									Home
-								</button>
-							</li>
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link"
-									role="tab"
-									aria-selected="false"
-									aria-controls="project-tab"
-									id="project"
-									tabindex="-1"
-								>
-									Project
-								</button>
-							</li>
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link"
-									role="tab"
-									aria-selected="false"
-									aria-controls="contact-tab"
-									id="contact"
-									tabindex="-1"
-									data-deletable="true"
-								>
-									Deletable !
-								</button>
-							</li>
-						</ul>
+				<div class="col-12 my-5">
+					<div class="border p-3">
+						<h3 class="mb-3">
+							Selection doesn't automatically follow focus and hash option is disabled
+						</h3>
+						<code>
+							{ delay: false, hash: false }
+						</code>
+						<div class="js-tabs mt-3" data-hash="false">
+							<ul class="nav nav-tabs mb-3" role="tablist">
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link is-active"
+										role="tab"
+										aria-selected="true"
+										aria-controls="home-tab"
+										id="home"
+									>
+										Home
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="project-tab"
+										id="project"
+										tabindex="-1"
+									>
+										Project
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="contact-tab"
+										id="contact"
+										tabindex="-1"
+										data-deletable="true"
+									>
+										Deletable!
+									</button>
+								</li>
+							</ul>
 
-						<div class="tab-content">
-							<section
-								class="tab-pane is-active m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="home"
-								id="home-tab"
-							>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-									hic, vero. Fugiat voluptas ex consequatur hic nemo officia iure
-									placeat non, pariatur, dolore natus nobis, tempore dolores dicta
-									nisi inventore.
-								</p>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-									animi illo voluptate possimus quidem quo ut culpa ullam
-									molestias, mollitia eaque commodi eos. Illum ea dignissimos
-									recusandae suscipit nulla veniam.
-								</p>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Deleniti sed, consequuntur repellendus architecto, harum cumque
-									velit, eius debitis ea voluptatibus officiis. Eaque quas modi
-									nisi optio quasi, neque mollitia quo.
-								</p>
-							</section>
-							<section
-								class="tab-pane m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="project"
-								id="project-tab"
-								hidden
-							>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque
-									cum ad officia reiciendis assumenda earum officiis praesentium
-									rem. A, voluptates itaque eligendi quae odit sunt voluptatibus
-									consequuntur soluta distinctio assumenda. Lorem ipsum dolor sit
-									amet, consectetur adipisicing elit. Temporibus veniam in velit
-									modi animi quod est, voluptatem voluptatum fugiat. Harum
-									architecto, quae repellendus nobis, libero vel corporis
-									quibusdam! Enim, numquam.
-								</p>
-							</section>
-							<section
-								class="tab-pane m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="contact"
-								id="contact-tab"
-								hidden
-							>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi
-									id doloribus soluta minima nulla nemo rerum, eveniet dolorem
-									earum! Similique atque, aliquam esse dolores alias minima
-									voluptas mollitia quos nisi.
-								</p>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex,
-									quia, sunt. Laudantium possimus vel ex nam fugit est eligendi
-									sapiente repellat ab a. Neque saepe magni laudantium dolorem,
-									obcaecati earum.
-								</p>
-							</section>
+							<div class="tab-content">
+								<section
+									class="tab-pane m-3 is-active"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="home"
+									id="home-tab"
+								>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Nihil hic, vero. Fugiat voluptas ex consequatur hic nemo
+										officia iure placeat non, pariatur, dolore natus nobis,
+										tempore dolores dicta nisi inventore.
+									</p>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Esse animi illo voluptate possimus quidem quo ut culpa ullam
+										molestias, mollitia eaque commodi eos. Illum ea dignissimos
+										recusandae suscipit nulla veniam.
+									</p>
+									<p class="mb-0">
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Deleniti sed, consequuntur repellendus architecto, harum
+										cumque velit, eius debitis ea voluptatibus officiis. Eaque
+										quas modi nisi optio quasi, neque mollitia quo.
+									</p>
+								</section>
+								<section
+									class="tab-pane m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="project"
+									id="project-tab"
+									hidden
+								>
+									<p class="mb-0">
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Itaque cum ad officia reiciendis assumenda earum officiis
+										praesentium rem. A, voluptates itaque eligendi quae odit
+										sunt voluptatibus consequuntur soluta distinctio assumenda.
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Temporibus veniam in velit modi animi quod est, voluptatem
+										voluptatum fugiat. Harum architecto, quae repellendus nobis,
+										libero vel corporis quibusdam! Enim, numquam.
+									</p>
+								</section>
+								<section
+									class="tab-pane m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="contact"
+									id="contact-tab"
+									hidden
+								>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Sequi id doloribus soluta minima nulla nemo rerum, eveniet
+										dolorem earum! Similique atque, aliquam esse dolores alias
+										minima voluptas mollitia quos nisi.
+									</p>
+									<p class="mb-0">
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+										Ex, quia, sunt. Laudantium possimus vel ex nam fugit est
+										eligendi sapiente repellat ab a. Neque saepe magni
+										laudantium dolorem, obcaecati earum.
+									</p>
+								</section>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-12">
-					<h2>Selection automatically follow focus (delay option)</h2>
-					<div class="js-tabs p-3" data-delay="300" data-hash="true">
-						<ul class="nav nav-tabs mb-3" role="tablist">
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link is-active"
-									role="tab"
-									aria-selected="true"
-									aria-controls="ant-giant-tab"
-									id="ant"
-								>
-									Ant, giant
-								</button>
-							</li>
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link"
-									role="tab"
-									aria-selected="false"
-									aria-controls="ettercap-tab"
-									id="ettercap"
-									tabindex="-1"
-								>
-									Ettercap
-								</button>
-							</li>
-							<li class="nav-item">
-								<button
-									type="button"
-									class="nav-link"
-									role="tab"
-									aria-selected="false"
-									aria-controls="cloaker-tab"
-									id="cloaker"
-									tabindex="-1"
-								>
-									Cloaker
-								</button>
-							</li>
-						</ul>
+				<div class="col-12 my-5">
+					<div class="border p-3">
+						<h3 class="mb-3">
+							Selection automatically follow focus (thanks to delay option) and hash
+							option is enabled
+						</h3>
+						<code>
+							{ delay: 300, hash: true }
+						</code>
+						<div class="js-tabs mt-3" data-delay="300" data-hash="true">
+							<ul class="nav nav-tabs mb-3" role="tablist">
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link is-active"
+										role="tab"
+										aria-selected="true"
+										aria-controls="ant-giant-tab"
+										id="ant"
+									>
+										Ant, giant
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="ettercap-tab"
+										id="ettercap"
+										tabindex="-1"
+									>
+										Ettercap
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="cloaker-tab"
+										id="cloaker"
+										tabindex="-1"
+									>
+										Cloaker
+									</button>
+								</li>
+							</ul>
 
-						<div class="tab-content">
-							<section
-								class="tab-pane is-active m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="ant-giant"
-								id="ant-giant-tab"
-							>
-								<p>
-									Both worker and warrior ants fight. If a warrior manages to
-									bite, it also tries to sting for 3d4 points damage. A successful
-									save reduces damage to 1d4. The queen has 10 HD but does not
-									move or fight.
-								</p>
-							</section>
-							<section
-								class="tab-pane m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="ettercap"
-								id="ettercap-tab"
-								hidden
-							>
-								<p>
-									Ettercaps are ugly bipedal creatures that get along very well
-									with all types of giant spiders. These creatures of low
-									intelligence are exceedingly cruel, very cunning, and are
-									skilled in setting traps -- very deadly traps -- much like the
-									spiders that often live around them.
-								</p>
-								<p>
-									Ettercaps stand around six feet tall, even with their stooping
-									gait and hunched shoulders. The creatures have short, spindly
-									legs, long arms that reach nearly to their ankles, and large
-									pot-bellies. The hands of ettercaps have a thumb and three long
-									fingers that end in razor sharp claws. Their bodies are covered
-									by tufts of thick, wiry, black hair, and their skin is dark and
-									thick. Ettercaps' heads are almost equine in shape, but they
-									have large reptilian eyes, usually blood-red in color, and large
-									fangs, one protruding downward from each side of the mouth. The
-									mouth itself is large and lined with very sharp teeth.
-								</p>
-								<p>
-									Ettercaps do not have a formal language. They express themselves
-									through a combination of highpitched chittering noises, shrieks,
-									and violent actions.
-								</p>
-							</section>
-							<section
-								class="tab-pane m-3"
-								tabindex="0"
-								role="tabpanel"
-								aria-labelledby="cloaker"
-								id="cloaker-tab"
-								hidden
-							>
-								<p>
-									Cloakers are fiendish horrors, related to trappers, that dwell
-									in dark places far beneath the surface of the earth. They
-									generally seek to kill those who enter their lairs, unless they
-									can think up some other, more amusing way to punish interlopers.
-								</p>
-								<p>
-									When a cloaker is first seen, it is almost impossible to
-									distinguish this monster from a common black cloak. The
-									monster's back has two rows of black eye spots running down it
-									that look much like buttons, and the two ivory-colored claws on
-									its upper edge can easily be mistaken for bone clasps.
-								</p>
-								<p>
-									When it unfurls itself and moves to attack, however, its true
-									nature becomes all too obvious. At this point, its white
-									underside is clear and the monster's face is fully visible. This
-									face, with the glow of its two piercing, red eyes and the
-									needle-like fangs that line its mouth, is a truly horrible
-									sight. At this point, the monster also uncurls the whip-like
-									tail at its trailing edge and begins to swish it back and forth
-									in anticipation.
-								</p>
-							</section>
+							<div class="tab-content">
+								<section
+									class="tab-pane m-3 is-active "
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="ant-giant"
+									id="ant-giant-tab"
+								>
+									<p class="mb-0">
+										Both worker and warrior ants fight. If a warrior manages to
+										bite, it also tries to sting for 3d4 points damage. A
+										successful save reduces damage to 1d4. The queen has 10 HD
+										but does not move or fight.
+									</p>
+								</section>
+								<section
+									class="tab-pane m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="ettercap"
+									id="ettercap-tab"
+									hidden
+								>
+									<p>
+										Ettercaps are ugly bipedal creatures that get along very
+										well with all types of giant spiders. These creatures of low
+										intelligence are exceedingly cruel, very cunning, and are
+										skilled in setting traps -- very deadly traps -- much like
+										the spiders that often live around them.
+									</p>
+									<p>
+										Ettercaps stand around six feet tall, even with their
+										stooping gait and hunched shoulders. The creatures have
+										short, spindly legs, long arms that reach nearly to their
+										ankles, and large pot-bellies. The hands of ettercaps have a
+										thumb and three long fingers that end in razor sharp claws.
+										Their bodies are covered by tufts of thick, wiry, black
+										hair, and their skin is dark and thick. Ettercaps' heads are
+										almost equine in shape, but they have large reptilian eyes,
+										usually blood-red in color, and large fangs, one protruding
+										downward from each side of the mouth. The mouth itself is
+										large and lined with very sharp teeth.
+									</p>
+									<p class="mb-0">
+										Ettercaps do not have a formal language. They express
+										themselves through a combination of highpitched chittering
+										noises, shrieks, and violent actions.
+									</p>
+								</section>
+								<section
+									class="tab-pane m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="cloaker"
+									id="cloaker-tab"
+									hidden
+								>
+									<p>
+										Cloakers are fiendish horrors, related to trappers, that
+										dwell in dark places far beneath the surface of the earth.
+										They generally seek to kill those who enter their lairs,
+										unless they can think up some other, more amusing way to
+										punish interlopers.
+									</p>
+									<p>
+										When a cloaker is first seen, it is almost impossible to
+										distinguish this monster from a common black cloak. The
+										monster's back has two rows of black eye spots running down
+										it that look much like buttons, and the two ivory-colored
+										claws on its upper edge can easily be mistaken for bone
+										clasps.
+									</p>
+									<p class="mb-0">
+										When it unfurls itself and moves to attack, however, its
+										true nature becomes all too obvious. At this point, its
+										white underside is clear and the monster's face is fully
+										visible. This face, with the glow of its two piercing, red
+										eyes and the needle-like fangs that line its mouth, is a
+										truly horrible sight. At this point, the monster also
+										uncurls the whip-like tail at its trailing edge and begins
+										to swish it back and forth in anticipation.
+									</p>
+								</section>
+							</div>
 						</div>
 					</div>
 				</div>
