@@ -10,11 +10,18 @@ export default class TabPanel {
 	}
 
 	activate() {
+		// console.info('TabPanel.activate', this.id);
+
 		this.rootElement.removeAttribute('hidden');
 		this.rootElement.classList.add('is-active');
 	}
 
 	delete() {
 		this.rootElement.parentElement.removeChild(this.rootElement);
+	}
+
+	destroy() {
+		this.rootElement.removeAttribute('hidden');
+		this.rootElement.classList.remove('is-active');
 	}
 }

@@ -9,7 +9,7 @@ export default class Tab extends EventDispatcher {
 		this.id = element.id;
 		this.controls = element.getAttribute('aria-controls');
 
-		this.active = false;
+		this.active = JSON.parse(element.getAttribute('aria-selected'));
 
 		this.toggle = this.toggle.bind(this);
 	}
@@ -40,21 +40,6 @@ export default class Tab extends EventDispatcher {
 	}
 
 	/**
-	 * Deactivate tab
-	 *
-	 * @return void
-	 */
-	deactivate() {
-		// console.info('Tab.deactivate');
-
-		this.active = false;
-		this.rootElement.setAttribute('tabindex', '-1');
-		this.rootElement.setAttribute('aria-selected', 'false');
-		// this.rootElement.removeEventListener('focus', this.focusEventHandler);
-		this.rootElement.classList.remove('is-active');
-	}
-
-	/**
 	 * Activate tab
 	 *
 	 * @param {boolean} focus
@@ -75,6 +60,21 @@ export default class Tab extends EventDispatcher {
 	}
 
 	/**
+	 * Deactivate tab
+	 *
+	 * @return void
+	 */
+	deactivate() {
+		// console.info('Tab.deactivate');
+
+		this.active = false;
+		this.rootElement.setAttribute('tabindex', '-1');
+		this.rootElement.setAttribute('aria-selected', 'false');
+		// this.rootElement.removeEventListener('focus', this.focusEventHandler);
+		this.rootElement.classList.remove('is-active');
+	}
+
+	/**
 	 * Focus tab
 	 *
 	 * @return void
@@ -90,5 +90,14 @@ export default class Tab extends EventDispatcher {
 	 */
 	delete() {
 		this.rootElement.parentElement.removeChild(this.rootElement);
+	}
+
+	destroy() {
+		this.rootElement.removeAttribute('tabindex');
+		this.rootElement.removeAttribute('aria-selected');
+		this.rootElement.classList.remove('is-active');
+
+		this.rootElement.removeEventListener('click', this.toggle);
+		this.off('Tab.activate', { controls: this.controls });
 	}
 }

@@ -139,6 +139,13 @@ To active panel on first load, add a `is-active` class to it.
 | ------------ | --------- | ------------ |
 | Tab.activate | event     | { controls } |
 
+## Methods
+
+| Method  |         |
+| ------- | ------- |
+| destroy | Destroy |
+| init    | Create  |
+
 ## Example
 
 An example is located right [here](https://19h47.github.io/19h47-tabs/), see [sources](/docs/index.html).

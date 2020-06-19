@@ -42,18 +42,22 @@ export default class Tabs {
 		this.tabs.map(tab => {
 			tab.init();
 
-			tab.on('Tab.activate', event => {
-				const { controls } = event;
-
+			tab.on('Tab.activate', () => {
+				// console.log('Tab.activate');
 				this.deactivateTabs();
 				this.deactivateTabPanels();
 
-				this.tabPanels.find(tabPanel => tabPanel.id === controls).activate();
+				this.tabPanels.find(tabPanel => tabPanel.id === tab.controls).activate();
 
 				if (this.options.hash) {
 					window.location.hash = tab.id;
 				}
 			});
+
+			if (tab.active) {
+				tab.active = false;
+				tab.toggle();
+			}
 
 			if (this.href && tab.id === this.href) {
 				tab.toggle();
@@ -269,5 +273,13 @@ export default class Tabs {
 		if (target === focused) {
 			this.tabs[target.index].toggle(false);
 		}
+	}
+
+	destroy() {
+		this.$tabList.removeEventListener('keyup', this.onKeyup);
+		this.$tabList.removeEventListener('keydown', this.onKeydown);
+
+		this.tabs.map(tab => tab.destroy());
+		this.tabPanels.map(tabPanel => tabPanel.destroy());
 	}
 }

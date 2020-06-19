@@ -16,7 +16,7 @@
 				display: block;
 			}
 
-			.tab-pane {
+			.tab-content section {
 				animation: fadeEffect 1s;
 			}
 
@@ -51,6 +51,16 @@
 							Tabs
 						</a>
 					</h1>
+				</div>
+			</div>
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="border p-3">
+						<button class="btn btn-primary js-destroy mr-2" type="button">
+							Destroy
+						</button>
+						<button class="btn btn-primary js-create" type="button">Create</button>
+					</div>
 				</div>
 			</div>
 			<div class="row my-5">
@@ -107,7 +117,7 @@
 
 							<div class="tab-content">
 								<section
-									class="tab-pane m-3 is-active"
+									class="m-3 is-active"
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="home"
@@ -133,7 +143,7 @@
 									</p>
 								</section>
 								<section
-									class="tab-pane m-3"
+									class="m-3"
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="project"
@@ -152,7 +162,7 @@
 									</p>
 								</section>
 								<section
-									class="tab-pane m-3"
+									class="m-3"
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="contact"
@@ -231,7 +241,7 @@
 
 							<div class="tab-content">
 								<section
-									class="tab-pane m-3 is-active "
+									class="m-3 is-active "
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="ant-giant"
@@ -245,7 +255,7 @@
 									</p>
 								</section>
 								<section
-									class="tab-pane m-3"
+									class="m-3"
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="ettercap"
@@ -279,7 +289,7 @@
 									</p>
 								</section>
 								<section
-									class="tab-pane m-3"
+									class="m-3"
 									tabindex="0"
 									role="tabpanel"
 									aria-labelledby="cloaker"
@@ -322,6 +332,9 @@
 		<script src="main.js"></script>
 		<script>
 			const elements = [...document.querySelectorAll('.js-tabs')];
+			const $destroy = document.querySelector('.js-destroy') || false;
+			const $create = document.querySelector('.js-create') || false;
+			const instances = [];
 
 			elements.map($el => {
 				const delay = parseInt($el.getAttribute('data-delay'), 10) || false;
@@ -329,6 +342,15 @@
 				const tabs = new Tabs.default($el, { delay, hash });
 
 				tabs.init();
+				instances.push(tabs);
+			});
+
+			$destroy.addEventListener('click', () => {
+				instances.map(instance => instance.destroy());
+			});
+
+			$create.addEventListener('click', () => {
+				instances.map(instance => instance.init());
 			});
 		</script>
 	</body>
