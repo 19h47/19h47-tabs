@@ -68,9 +68,9 @@ export default class Tab extends EventDispatcher {
 		// console.info('Tab.deactivate');
 
 		this.active = false;
-		this.rootElement.setAttribute('tabindex', '-1');
-		this.rootElement.setAttribute('aria-selected', 'false');
-		// this.rootElement.removeEventListener('focus', this.focusEventHandler);
+		this.rootElement.setAttribute('tabindex', -1);
+		this.rootElement.setAttribute('aria-selected', false);
+
 		this.rootElement.classList.remove('is-active');
 	}
 
