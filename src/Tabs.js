@@ -54,10 +54,10 @@ export default class Tabs {
 				}
 			});
 
-			if (tab.active) {
-				tab.active = false;
-				tab.toggle();
-			}
+			// if (tab.active) {
+			// 	tab.active = false;
+			// 	tab.toggle();
+			// }
 
 			if (this.href && tab.id === this.href) {
 				tab.toggle();
