@@ -54,16 +54,6 @@
 				</div>
 			</div>
 			<div class="row my-5">
-				<div class="col-12">
-					<div class="border p-3">
-						<button class="btn btn-primary js-destroy mr-2" type="button">
-							Destroy
-						</button>
-						<button class="btn btn-primary js-create" type="button">Create</button>
-					</div>
-				</div>
-			</div>
-			<div class="row my-5">
 				<div class="col-12 ">
 					<div class="border p-3">
 						<h3 class="mb-3">
@@ -73,7 +63,15 @@
 							{ delay: false, hash: false }
 						</code>
 						<div class="js-tabs mt-3" data-hash="false">
-							<ul class="nav nav-tabs mb-3" role="tablist">
+							<div class="border p-3 my-3">
+								<button class="btn btn-primary js-destroy mr-2" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+							</div>
+							<ul class="nav nav-tabs my-3" role="tablist">
 								<li class="nav-item">
 									<button
 										type="button"
@@ -198,7 +196,15 @@
 							{ delay: 300, hash: true }
 						</code>
 						<div class="js-tabs mt-3" data-delay="300" data-hash="true">
-							<ul class="nav nav-tabs mb-3" role="tablist">
+							<div class="border p-3 my-3">
+								<button class="btn btn-primary js-destroy mr-2" type="button">
+									Destroy
+								</button>
+								<button class="btn btn-primary js-create" type="button">
+									Create
+								</button>
+							</div>
+							<ul class="nav nav-tabs my-3" role="tablist">
 								<li class="nav-item">
 									<button
 										type="button"
@@ -332,25 +338,18 @@
 		<script src="main.js"></script>
 		<script>
 			const elements = [...document.querySelectorAll('.js-tabs')];
-			const $destroy = document.querySelector('.js-destroy') || false;
-			const $create = document.querySelector('.js-create') || false;
-			const instances = [];
 
 			elements.map($el => {
 				const delay = parseInt($el.getAttribute('data-delay'), 10) || false;
 				const hash = JSON.parse($el.getAttribute('data-hash'));
 				const tabs = new Tabs.default($el, { delay, hash });
+				const $destroy = $el.querySelector('.js-destroy');
+				const $create = $el.querySelector('.js-create');
 
 				tabs.init();
-				instances.push(tabs);
-			});
 
-			$destroy.addEventListener('click', () => {
-				instances.map(instance => instance.destroy());
-			});
-
-			$create.addEventListener('click', () => {
-				instances.map(instance => instance.init());
+				$destroy.addEventListener('click', () => tabs.destroy());
+				$create.addEventListener('click', () => tabs.init());
 			});
 		</script>
 	</body>

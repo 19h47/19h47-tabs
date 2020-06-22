@@ -46,7 +46,7 @@ export default class Tab extends EventDispatcher {
 	 * @return void
 	 */
 	activate(focus = true) {
-		// console.info('Tab.activate');
+		console.info('Tab.activate');
 
 		this.active = true;
 		this.rootElement.setAttribute('tabindex', 0);

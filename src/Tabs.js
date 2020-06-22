@@ -50,17 +50,14 @@ export default class Tabs {
 				this.tabPanels.find(tabPanel => tabPanel.id === tab.controls).activate();
 
 				if (this.options.hash) {
+					this.href = tab.id;
 					window.location.hash = tab.id;
 				}
 			});
 
-			// if (tab.active) {
-			// 	tab.active = false;
-			// 	tab.toggle();
-			// }
-
-			if (this.href && tab.id === this.href) {
-				tab.toggle();
+			if (tab.active || (this.href && tab.id === this.href)) {
+				tab.emit('Tab.activate', { controls: tab.controls });
+				tab.activate(false);
 			}
 
 			return true;
