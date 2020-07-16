@@ -32,18 +32,19 @@ export default class Tabs {
 		this.tabs = tabs.map(($element, index) => new Tab($element, index));
 		this.tabPanels = tabPanels.map($element => new TabPanel($element));
 
-		this.href = this.options.hash && getHash(window.location.href);
+		this.href = (this.options.hash && getHash(window.location.href)) || false;
 
 		this.onKeydown = this.onKeydown.bind(this);
 		this.onKeyup = this.onKeyup.bind(this);
 	}
 
 	init() {
-		this.tabs.map(tab => {
+		this.tabs.forEach(tab => {
 			tab.init();
 
 			tab.on('Tab.activate', () => {
-				// console.log('Tab.activate');
+				// console.info('Tab.activate');
+
 				this.deactivateTabs();
 				this.deactivateTabPanels();
 
@@ -55,12 +56,13 @@ export default class Tabs {
 				}
 			});
 
-			if (tab.active || (this.href && tab.id === this.href)) {
-				tab.emit('Tab.activate', { controls: tab.controls });
-				tab.activate(false);
-			}
+			if (tab.active || tab.id === this.href) {
+				this.deactivateTabs();
+				this.deactivateTabPanels();
 
-			return true;
+				tab.activate(false);
+				this.tabPanels.find(tabPanel => tabPanel.id === tab.controls).activate();
+			}
 		});
 
 		this.initEvents();
