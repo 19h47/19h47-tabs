@@ -141,10 +141,10 @@ To active panel on first load, add a `is-active` class to it.
 
 ## Methods
 
-| Method  |         |
-| ------- | ------- |
-| destroy | Destroy |
-| init    | Create  |
+| Method      |         |
+| ----------- | ------- |
+| `destroy()` | Destroy |
+| `init()`    | Create  |
 
 ## Example
 
