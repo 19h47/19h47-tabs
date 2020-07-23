@@ -25,6 +25,7 @@
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.1.0",
 		"clean-webpack-plugin": "^3.0.0",
+		"copy-webpack-plugin": "^6.0.3",
 		"core-js": "^3.6.5",
 		"eslint": "^7.5.0",
 		"eslint-config-airbnb-base": "^14.2.0",
@@ -45,7 +46,6 @@
 		"webpack-notifier": "^1.8.0"
 	},
 	"dependencies": {
-		"@19h47/keycode": "3.0.0",
-		"copy-webpack-plugin": "^6.0.3"
+		"@19h47/keycode": "3.0.0"
 	}
 }
