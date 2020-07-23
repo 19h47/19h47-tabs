@@ -4,17 +4,12 @@
  * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
  */
 
-// Node modules
-const path = require('path');
-
 // Plugins
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin: CleanPlugin } = require('clean-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
-function resolve(dir) {
-	return path.join(__dirname, '..', dir);
-}
+const resolve = require('./webpack.utils');
 
 module.exports = {
 	entry: {
@@ -55,10 +50,10 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new CleanWebpackPlugin({
+		new CleanPlugin({
 			cleanOnceBeforeBuildPatterns: [resolve('dist'), resolve('docs')],
 		}),
-		new HtmlWebpackPlugin({
+		new HtmlPlugin({
 			filename: resolve('docs/index.html'),
 			template: resolve('index.html'),
 			inject: false,
