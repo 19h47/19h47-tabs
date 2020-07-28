@@ -26,24 +26,27 @@ export default class Tabs {
 		this.options = { ...defaults, ...options };
 		this.options.orientation = 'vertical' === this.$tabList.getAttribute('aria-orientation');
 
-		const tabs = [...this.$tabList.querySelectorAll('[role="tab"]')];
-		const tabPanels = [...this.rootElement.querySelectorAll('[role="tabpanel"]')];
-
-		this.tabs = tabs.map(($element, index) => new Tab($element, index));
-		this.tabPanels = tabPanels.map($element => new TabPanel($element));
-
 		this.href = (this.options.hash && getHash(window.location.href)) || false;
+		this.current = 0;
 
 		this.onKeydown = this.onKeydown.bind(this);
 		this.onKeyup = this.onKeyup.bind(this);
 	}
 
 	init() {
-		this.tabs.forEach(tab => {
+		this.tabs = [...this.$tabList.querySelectorAll('[role="tab"]')].map(
+			($element, index) => new Tab($element, index),
+		);
+		this.tabPanels = [...this.rootElement.querySelectorAll('[role="tabpanel"]')].map(
+			$element => new TabPanel($element),
+		);
+
+		this.tabs.forEach((tab, index) => {
 			tab.init();
 
 			tab.on('Tab.activate', () => {
 				// console.info('Tab.activate');
+				this.current = index;
 
 				this.deactivateTabs();
 				this.deactivateTabPanels();
@@ -56,7 +59,7 @@ export default class Tabs {
 				}
 			});
 
-			if (tab.active || tab.id === this.href) {
+			if (tab.active || tab.id === this.href || this.current === index) {
 				this.deactivateTabs();
 				this.deactivateTabPanels();
 
@@ -86,17 +89,35 @@ export default class Tabs {
 
 		const { keyCode: key } = event;
 
+		const first = () => {
+			event.preventDefault();
+
+			this.current = 0;
+			this.tabs[0].toggle();
+		};
+
+		const last = () => {
+			event.preventDefault();
+
+			this.current = this.tabs.length - 1;
+			this.tabs[this.tabs.length - 1].toggle();
+		};
+
 		const codes = {
-			[END]: () => {
-				event.preventDefault();
-				this.tabs[this.tabs.length - 1].toggle();
+			[END]: last,
+			[HOME]: first,
+			[PAGE_UP]: () => {
+				if ('vertical' === this.options.orientation) {
+					event.preventDefault();
+					this.switchTabOnArrowPress(event);
+				}
 			},
-			[HOME]: () => {
-				event.preventDefault();
-				this.tabs[0].toggle();
+			[PAGE_DOWN]: () => {
+				if ('vertical' === this.options.orientation) {
+					event.preventDefault();
+					this.switchTabOnArrowPress(event);
+				}
 			},
-			[PAGE_UP]: () => this.determineOrientation(event),
-			[PAGE_DOWN]: () => this.determineOrientation(event),
 			default: () => false,
 		};
 
@@ -112,48 +133,20 @@ export default class Tabs {
 	 * @return void
 	 */
 	onKeyup(event) {
-		// console.log('Tabs.onKeyup');
+		// console.info('Tabs.onKeyup');
 
 		const { keyCode: key, target } = event;
 		const selected = JSON.parse(target.getAttribute('aria-selected'));
 
 		const codes = {
-			[ARROW_LEFT]: () => this.determineOrientation(event),
-			[ARROW_RIGHT]: () => this.determineOrientation(event),
+			[ARROW_LEFT]: () => this.switchTabOnArrowPress(event),
+			[ARROW_RIGHT]: () => this.switchTabOnArrowPress(event),
 			[DELETE]: () => selected && this.determineDeletable(event),
 			[BACKSPACE]: () => selected && this.determineDeletable(event),
 			default: () => false,
 		};
 
 		return (codes[key] || codes.default)();
-	}
-
-	/**
-	 * Determine orientation
-	 *
-	 * When a tablist's aria-orientation is set to vertical, only up and down
-	 * arrow should function. In all other cases only left and right arrow
-	 * function.
-	 *
-	 * @param obj event
-	 */
-	determineOrientation(event) {
-		// console.info('Tabs.determineOrientation');
-
-		const { keyCode: key } = event;
-		const { orientation: vertical } = this.options;
-		let proceed = false;
-
-		if (vertical && (key === PAGE_UP || key === PAGE_DOWN)) {
-			event.preventDefault();
-			proceed = true;
-		} else if (key === ARROW_LEFT || key === ARROW_RIGHT) {
-			proceed = true;
-		}
-
-		if (proceed) {
-			this.switchTabOnArrowPress(event);
-		}
 	}
 
 	/**
@@ -165,9 +158,8 @@ export default class Tabs {
 	 * @param  {object} event
 	 * @return void
 	 */
-	switchTabOnArrowPress(event) {
+	switchTabOnArrowPress({ target, keyCode: key }) {
 		// console.info('Tabs.switchTabOnArrowPress');
-		const { target, keyCode: key } = event;
 
 		if (this.options.delay) {
 			this.tabs.map(tab =>
@@ -194,7 +186,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	deactivateTabs() {
-		this.tabs.map(tab => tab.deactivate());
+		this.tabs.forEach(tab => tab.deactivate());
 	}
 
 	/**
@@ -203,7 +195,7 @@ export default class Tabs {
 	 * @retur void
 	 */
 	deactivateTabPanels() {
-		this.tabPanels.map(tabPanel => tabPanel.deactivate());
+		this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
 	}
 
 	/**
@@ -214,10 +206,8 @@ export default class Tabs {
 	 * @param  {object} event
 	 * @return {boolean}
 	 */
-	determineDeletable(event) {
+	determineDeletable({ target }) {
 		// console.info('Tabs.determineDeletable');
-
-		const { target } = event;
 
 		if (null === target.getAttribute('data-deletable')) {
 			return false;
@@ -246,39 +236,28 @@ export default class Tabs {
 	 * @param  {object} event
 	 * @return void
 	 */
-	focusEventHandler(event) {
+	focusEventHandler({ target }) {
 		// console.info('Tabs.focusEventHandler');
 
-		const { target } = event;
-
 		setTimeout(() => {
-			this.checkTabFocus(target);
+			if (target === document.activeElement) {
+				this.tabs[target.index].toggle(false);
+			}
 		}, this.options.delay);
-	}
-
-	/**
-	 * Check tab focus
-	 *
-	 * Only activate tab on focus if it still has focus after the delay
-	 *
-	 * @param  {object} target
-	 * @return void
-	 */
-	checkTabFocus(target) {
-		// console.info('Tabs.checkTabFocus');
-
-		const focused = document.activeElement;
-
-		if (target === focused) {
-			this.tabs[target.index].toggle(false);
-		}
 	}
 
 	destroy() {
 		this.$tabList.removeEventListener('keyup', this.onKeyup);
 		this.$tabList.removeEventListener('keydown', this.onKeydown);
 
-		this.tabs.map(tab => tab.destroy());
-		this.tabPanels.map(tabPanel => tabPanel.destroy());
+		this.tabs.forEach(tab => tab.destroy());
+		this.tabPanels.forEach(tabPanel => tabPanel.destroy());
+
+		this.tabs = [];
+		this.tabPanels = [];
+	}
+
+	create() {
+		this.init();
 	}
 }

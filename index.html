@@ -334,6 +334,147 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="border p-3">
+						<h3 class="mb-3">Add</h3>
+						<div class="js-tabs mt-3">
+							<div class="border my-3 p-3">
+								<div class="form-group">
+									<input
+										class="form-control js-input"
+										type="text"
+										placeholder="Item"
+									/>
+								</div>
+								<div class="form-group">
+									<textarea
+										placeholder="Content"
+										class="form-control js-textarea"
+									></textarea>
+								</div>
+
+								<button class="btn btn-primary js-add" type="button">
+									Add
+								</button>
+							</div>
+
+							<ul class="nav nav-tabs my-3 js-tab-list" role="tablist">
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link is-active"
+										role="tab"
+										aria-selected="true"
+										aria-controls="galeb-duhr-tab"
+										id="galeb-duhr"
+									>
+										Galeb Duhr
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="troll-tab"
+										id="troll"
+										tabindex="-1"
+									>
+										Troll
+									</button>
+								</li>
+								<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="jermlaine-tab"
+										id="jermlaine"
+										tabindex="-1"
+									>
+										Jermlaine
+									</button>
+								</li>
+							</ul>
+
+							<div class="tab-content js-tab-content">
+								<section
+									class="m-3 is-active"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="galeb-duhr"
+									id="galeb-duhr-tab"
+								>
+									<p>
+										The galeb duhr is a curious boulder-like creature with
+										appendages that act as hands and feet. These intelligent
+										beings are very large and slow-moving. They live in rocky or
+										mountainous areas where they can feel the earth power and
+										control the rocks around them.
+									</p>
+									<p class="mb-0">
+										A typical galeb duhr is from 8 to 12 feet tall. When not
+										moving it looks like part of the terrain it lives in.
+									</p>
+								</section>
+								<section
+									class="m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="troll"
+									id="troll-tab"
+									hidden
+								>
+									<p class="mb-0">
+										Trolls are horrid carnivores found in all climes, from
+										arctic wastelands to tropical jungles. Most creatures avoid
+										these beasts, since trolls know no fear and attack
+										unceasingly when hungry. Their frame appears thin and frail,
+										but trolls possess surprising strength. Their arms and legs
+										are long and ungainly. The legs end in great three-toed
+										feet, the arms in wide, powerful hands with sharpened claws.
+										The trolls' rubbery hide is colored a moss green, mottled
+										green and gray, or putrid gray. A writhing hairlike mass
+										grows out of their skulls and is usually greenish black or
+										iron gray in color. Their dull, sunken black eyes possess
+										90-foot infravision. Females are easily distinguished from
+										males; they are both larger and more powerful than their
+										male counterparts.
+									</p>
+								</section>
+								<section
+									class="m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="jermlaine"
+									id="jermlaine-tab"
+									hidden
+								>
+									<p>
+										Jermlaine are a diminutive humanoid race that dwells in
+										tunnels and ambushes hapless adventurers. They are known by
+										a variety of names such as jinxkin or bane-midges.
+									</p>
+									<p class="mb-0">
+										Jermlaine appear to be tiny humans dressed in baggy clothing
+										and leather helmets. In fact the "clothing" is their own
+										saggy skin and pointed heads. The limbs are knottily
+										muscled. The fingernails and toenails are thick and filthy,
+										although the fingers and toes are very nimble. Their
+										gray-brown, warty hide blends in with natural earth and
+										stone. When they wear rags or scraps as clothing, such items
+										are also camouflage colored.
+									</p>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<script src="main.js"></script>
@@ -347,10 +488,62 @@
 				const $destroy = $el.querySelector('.js-destroy');
 				const $create = $el.querySelector('.js-create');
 
+				const $list = $el.querySelector('.js-tab-list');
+				const $content = $el.querySelector('.js-tab-content');
+				const $add = $el.querySelector('.js-add');
+				const $input = $el.querySelector('.js-input');
+				const $textarea = $el.querySelector('.js-textarea');
+
 				tabs.init();
 
-				$destroy.addEventListener('click', () => tabs.destroy());
-				$create.addEventListener('click', () => tabs.init());
+				$destroy && $destroy.addEventListener('click', () => tabs.destroy());
+				$create && $create.addEventListener('click', () => tabs.create());
+
+				$add &&
+					$add.addEventListener('click', () => {
+						const { value: tab } = $input;
+						const { value: panel } = $textarea;
+
+						if (tab && panel) {
+							console.log(tab, panel);
+
+							tabs.destroy();
+
+							$list.insertAdjacentHTML(
+								'beforeend',
+								`<li class="nav-item">
+									<button
+										type="button"
+										class="nav-link"
+										role="tab"
+										aria-selected="false"
+										aria-controls="${tab}-tab"
+										id="${tab}"
+										tabindex="-1"
+									>
+										${tab}
+									</button>
+								</li>`,
+							);
+
+							$content.insertAdjacentHTML(
+								'beforeend',
+								`<section
+									class="m-3"
+									tabindex="0"
+									role="tabpanel"
+									aria-labelledby="${tab}"
+									id="${tab}-tab"
+									hidden
+								>
+									<p class="mb-0">${panel}</p>
+								</section>`,
+							);
+
+							tabs.create();
+							console.log(tabs);
+						}
+					});
 			});
 		</script>
 	</body>

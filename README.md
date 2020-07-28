@@ -145,6 +145,7 @@ To active panel on first load, add a `is-active` class to it.
 | ----------- | ------- |
 | `destroy()` | Destroy |
 | `init()`    | Create  |
+| `create()`  | Create  |
 
 ## Example
 
