@@ -26,7 +26,7 @@ export default class Tabs {
 		this.options = { ...defaults, ...options };
 		this.options.orientation = 'vertical' === this.$tabList.getAttribute('aria-orientation');
 
-		this.href = (this.options.hash && getHash(window.location.href)) || false;
+		this.href = (this.options.hash && getHash(window.location.hash)) || false;
 		this.current = 0;
 
 		this.onKeydown = this.onKeydown.bind(this);
@@ -89,6 +89,7 @@ export default class Tabs {
 
 		const { keyCode: key } = event;
 
+		// My first
 		const first = () => {
 			event.preventDefault();
 
@@ -96,6 +97,7 @@ export default class Tabs {
 			this.tabs[0].toggle();
 		};
 
+		// My last
 		const last = () => {
 			event.preventDefault();
 
@@ -103,6 +105,7 @@ export default class Tabs {
 			this.tabs[this.tabs.length - 1].toggle();
 		};
 
+		// My everything
 		const codes = {
 			[END]: last,
 			[HOME]: first,
@@ -222,8 +225,10 @@ export default class Tabs {
 
 		// Activate the closest tab to the one that was just deleted
 		if (0 > target.index - 1) {
+			this.current = 0;
 			this.tabs[0].toggle();
 		} else {
+			this.current = target.index - 1;
 			this.tabs[target.index - 1].toggle();
 		}
 
