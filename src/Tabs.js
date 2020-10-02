@@ -81,7 +81,7 @@ export default class Tabs {
 	 *
 	 * Handle keydown on tabs
 	 *
-	 * @param  obj event
+	 * @param  {object} event
 	 * @return void
 	 */
 	onKeydown(event) {
@@ -195,7 +195,7 @@ export default class Tabs {
 	/**
 	 * Deactivate tab panels
 	 *
-	 * @retur void
+	 * @return void
 	 */
 	deactivateTabPanels() {
 		this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
@@ -238,7 +238,7 @@ export default class Tabs {
 	/**
 	 * Focus event handler
 	 *
-	 * @param  {object} event
+	 * @param {object} event
 	 * @return void
 	 */
 	focusEventHandler({ target }) {
