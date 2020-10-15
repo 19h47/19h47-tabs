@@ -147,6 +147,21 @@ To active panel on first load, add a `is-active` class to it.
 | `init()`    | Create  |
 | `create()`  | Create  |
 
+## Build Setup
+
+```bash
+
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn start
+
+# build for production
+$ yarn prod
+
+```
+
 ## Example
 
 An example is located right [here](https://19h47.github.io/19h47-tabs/), see [sources](/docs/index.html).
