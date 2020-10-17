@@ -531,7 +531,13 @@
 
 						$alert.appendChild($el);
 
-						setTimeout(() => $el.parentNode.removeChild($el), 2000);
+						$el.addEventListener(
+							'click',
+							() => $el.style.setProperty('display', 'none'),
+							false,
+						);
+
+						$el && setTimeout(() => $el.parentNode.removeChild($el), 2000);
 					});
 				});
 
@@ -586,6 +592,12 @@
 									const $el = alert(controls);
 									console.log($el);
 									$alert.appendChild($el);
+
+									$el.addEventListener(
+										'click',
+										() => $el.style.setProperty('display', 'none'),
+										false,
+									);
 
 									setTimeout(() => $el.parentNode.removeChild($el), 2000);
 								});
