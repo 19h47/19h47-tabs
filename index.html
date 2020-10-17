@@ -528,7 +528,7 @@
 				tabs.tabs.forEach(tab => {
 					tab.on('Tab.activate', ({ controls }) => {
 						const $el = alert(controls);
-						console.log($el);
+
 						$alert.appendChild($el);
 
 						setTimeout(() => $el.parentNode.removeChild($el), 2000);
