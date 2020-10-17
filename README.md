@@ -15,6 +15,7 @@ import Tabs from '@19h47/tabs';
 
 const $element = document.querySelector('.js-tabs');
 const tabs = new Tabs($element);
+
 tabs.init();
 ```
 
@@ -138,6 +139,21 @@ To active panel on first load, add a `is-active` class to it.
 | Event        | Arguments | Description  |
 | ------------ | --------- | ------------ |
 | Tab.activate | event     | { controls } |
+
+```javascript
+import Tabs from '@19h47/tabs';
+
+const $element = document.querySelector('.js-tabs');
+const tabs = new Tabs($element);
+
+tabs.init();
+
+tabs.tabs.forEach($tab => {
+	$tab.on('Tab.activate', ({ controls }) => {
+		console.log(controls);
+	});
+});
+```
 
 ## Methods
 
