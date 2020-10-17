@@ -8,6 +8,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const resolve = require('./webpack.utils');
 
@@ -63,6 +64,9 @@ module.exports = {
 			title: 'Webpack',
 			excludeWarnings: true,
 			alwaysNotify: true,
+		}),
+		new CopyPlugin({
+			patterns: [{ from: resolve('open-file-folder.png'), to: resolve('docs/') }],
 		}),
 	],
 };
