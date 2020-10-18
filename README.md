@@ -136,9 +136,10 @@ To active panel on first load, add a `is-active` class to it.
 
 ## Events
 
-| Event        | Arguments | Description  |
-| ------------ | --------- | ------------ |
-| Tab.activate | event     | { controls } |
+| Event        | Arguments | Description                                                            |
+| ------------ | --------- | ---------------------------------------------------------------------- |
+| Tab.activate | event     | Object containing current **controls** id, and current DOM **element** |
+| Tab.delete   | event     | Object containing current **controls** id, and current DOM **element** |
 
 ```javascript
 import Tabs from '@19h47/tabs';
@@ -149,8 +150,11 @@ const tabs = new Tabs($element);
 tabs.init();
 
 tabs.tabs.forEach($tab => {
-	$tab.on('Tab.activate', ({ controls }) => {
-		console.log(controls);
+	$tab.on('Tab.activate', ({ controls, element }) => {
+		console.log(controls, element);
+	});
+	$tab.on('Tab.delete', ({ controls, element }) => {
+		console.log(controls, element);
 	});
 });
 ```

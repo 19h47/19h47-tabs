@@ -2,7 +2,7 @@ import EventDispatcher from '@/EventDispatcher';
 
 export default class Tab extends EventDispatcher {
 	constructor(element, index) {
-		super(['Tab.activate']);
+		super(['Tab.activate', 'Tab.delete']);
 
 		this.rootElement = element;
 		this.rootElement.index = index;
@@ -35,7 +35,7 @@ export default class Tab extends EventDispatcher {
 			return;
 		}
 
-		this.emit('Tab.activate', { controls: this.controls });
+		this.emit('Tab.activate', { controls: this.controls, element: this.rootElement });
 		this.activate(focus);
 	}
 
@@ -89,6 +89,9 @@ export default class Tab extends EventDispatcher {
 	 * @return void
 	 */
 	delete() {
+		// console.info('Tab.delete');
+
+		this.emit('Tab.delete', { controls: this.controls, element: this.rootElement });
 		this.rootElement.parentElement.removeChild(this.rootElement);
 	}
 
@@ -98,6 +101,6 @@ export default class Tab extends EventDispatcher {
 		this.rootElement.classList.remove('is-active');
 
 		this.rootElement.removeEventListener('click', this.toggle);
-		this.off('Tab.activate', { controls: this.controls });
+		this.off('Tab.activate', { controls: this.controls, element: this.rootElement });
 	}
 }
