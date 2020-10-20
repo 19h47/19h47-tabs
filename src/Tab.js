@@ -1,9 +1,8 @@
-import EventDispatcher from '@/EventDispatcher';
+import { EventEmitter } from 'events';
 
-export default class Tab extends EventDispatcher {
+export default class Tab extends EventEmitter {
 	constructor(element, index, callback) {
-		super(['Tab.activate', 'Tab.delete']);
-
+		super();
 		this.rootElement = element;
 		this.rootElement.index = index;
 		this.id = element.id;
