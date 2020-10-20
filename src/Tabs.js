@@ -18,9 +18,7 @@ import {
 const defaults = {
 	hash,
 	delay,
-	callback() {
-		return new Promise(resolve => resolve());
-	},
+	callback() {},
 };
 
 export default class Tabs {

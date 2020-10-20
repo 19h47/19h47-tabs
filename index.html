@@ -528,10 +528,7 @@
 					delay,
 					hash,
 					callback() {
-						return new Promise(resolve => {
-							onChange(`<strong>${this.controls}</strong> callback!`);
-							resolve();
-						});
+						onChange(`<strong>${this.controls}</strong> callback!`);
 					},
 				});
 				const $destroy = $el.querySelector('.js-destroy');

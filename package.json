@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/tabs",
-	"version": "5.2.0",
+	"version": "5.2.1",
 	"description": "Tabs",
 	"main": "dist/main.js",
 	"scripts": {

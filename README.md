@@ -129,11 +129,27 @@ To active panel on first load, add a `is-active` class to it.
 
 ## Options
 
-| Option   | Type     | Default | Description                                                                       |
-| -------- | -------- | ------- | --------------------------------------------------------------------------------- |
-| delay    | integer  | 0       | Determine whether there should be a delay when user navigates with the arrow keys |
-| hash     | boolean  | true    |                                                                                   |
-| callback | function | Promise | A function that must return a Promise.                                            |
+| Option   | Type     | Default  | Description                                                                                                                                                    |
+| -------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| delay    | integer  | 0        | Determine whether there should be a delay when user navigates with the arrow keys                                                                              |
+| hash     | boolean  | true     |                                                                                                                                                                |
+| callback | function | () => {} | A callback fired right before `Tab.activate` event. Useful for animation or to fetch data for instance. Don't use arrow function if you need to access `this`. |
+
+```javascript
+import Tabs from '@19h47/tabs';
+
+const $element = document.querySelector('.js-tabs');
+const tabs = new Tabs.default($el, {
+	callback() {
+		return new Promise(resolve => {
+			// animate, fetch data, use this, do your stuff, etc.
+			resolve();
+		});
+	},
+});
+
+tabs.init();
+```
 
 ## Events
 
