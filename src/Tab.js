@@ -1,7 +1,7 @@
 import EventDispatcher from '@/EventDispatcher';
 
 export default class Tab extends EventDispatcher {
-	constructor(element, index) {
+	constructor(element, index, callback) {
 		super(['Tab.activate', 'Tab.delete']);
 
 		this.rootElement = element;
@@ -10,6 +10,7 @@ export default class Tab extends EventDispatcher {
 		this.controls = element.getAttribute('aria-controls');
 
 		this.active = JSON.parse(element.getAttribute('aria-selected'));
+		this.callback = callback.bind(this);
 
 		this.toggle = this.toggle.bind(this);
 	}
@@ -28,12 +29,14 @@ export default class Tab extends EventDispatcher {
 	 * @param {boolean} focus
 	 * @return void
 	 */
-	toggle(focus = true) {
+	async toggle(focus = true) {
 		// console.info('Tab.toggle', this.active);
 
 		if (this.active) {
 			return;
 		}
+
+		await this.callback();
 
 		this.emit('Tab.activate', { controls: this.controls, element: this.rootElement });
 		this.activate(focus);

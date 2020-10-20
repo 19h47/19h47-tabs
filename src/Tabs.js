@@ -15,7 +15,13 @@ import {
 	DELETE,
 } from '@19h47/keycode';
 
-const defaults = { hash, delay };
+const defaults = {
+	hash,
+	delay,
+	callback() {
+		return new Promise(resolve => resolve());
+	},
+};
 
 export default class Tabs {
 	constructor(element, options = {}) {
@@ -35,7 +41,7 @@ export default class Tabs {
 
 	init() {
 		this.tabs = [...this.$tabList.querySelectorAll('[role="tab"]')].map(
-			($element, index) => new Tab($element, index),
+			($element, index) => new Tab($element, index, this.options.callback),
 		);
 		this.tabPanels = [...this.rootElement.querySelectorAll('[role="tabpanel"]')].map(
 			$element => new TabPanel($element),

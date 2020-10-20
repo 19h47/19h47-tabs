@@ -129,10 +129,11 @@ To active panel on first load, add a `is-active` class to it.
 
 ## Options
 
-| Option | Type    | Default | Description                                                                       |
-| ------ | ------- | ------- | --------------------------------------------------------------------------------- |
-| delay  | integer | 0       | Determine whether there should be a delay when user navigates with the arrow keys |
-| hash   | boolean | true    |                                                                                   |
+| Option   | Type     | Default | Description                                                                       |
+| -------- | -------- | ------- | --------------------------------------------------------------------------------- |
+| delay    | integer  | 0       | Determine whether there should be a delay when user navigates with the arrow keys |
+| hash     | boolean  | true    |                                                                                   |
+| callback | function | Promise | A function that must return a Promise.                                            |
 
 ## Events
 

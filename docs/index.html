@@ -66,7 +66,16 @@
 			elements.map($el => {
 				const delay = parseInt($el.getAttribute('data-delay'), 10) || false;
 				const hash = JSON.parse($el.getAttribute('data-hash'));
-				const tabs = new Tabs.default($el, { delay, hash });
+				const tabs = new Tabs.default($el, {
+					delay,
+					hash,
+					callback() {
+						return new Promise(resolve => {
+							onChange(`<strong>${this.controls}</strong> callback!`);
+							resolve();
+						});
+					},
+				});
 				const $destroy = $el.querySelector('.js-destroy');
 				const $create = $el.querySelector('.js-create');
 
