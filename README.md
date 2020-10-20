@@ -208,4 +208,3 @@ An example is located right [here](https://19h47.github.io/19h47-tabs/), see [so
 -   [Deciding When to Make Selection Automatically Follow Focus](https://www.w3.org/TR/wai-aria-practices/#kbd_selection_follows_focus)
 -   [Example of Tabs with Manual Activation](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/js/tabs.js)
 -   [Keycode](https://keycode.info/) by [Wes Bos](https://wesbos.com/)
--   [Aleh Zasypkin](https://github.com/azasypkin/event-dispatcher) for its Event Dispatcher
