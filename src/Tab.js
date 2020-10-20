@@ -93,7 +93,6 @@ export default class Tab extends EventEmitter {
 	delete() {
 		// console.info('Tab.delete');
 
-		this.emit('Tab.delete', { controls: this.controls, element: this.rootElement });
 		this.rootElement.parentElement.removeChild(this.rootElement);
 	}
 
@@ -103,6 +102,5 @@ export default class Tab extends EventEmitter {
 		this.rootElement.classList.remove('is-active');
 
 		this.rootElement.removeEventListener('click', this.toggle);
-		this.off('Tab.activate', { controls: this.controls, element: this.rootElement });
 	}
 }
