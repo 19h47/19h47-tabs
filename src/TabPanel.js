@@ -16,9 +16,7 @@ export default class TabPanel {
 		this.rootElement.classList.add('is-active');
 	}
 
-	delete() {
-		this.rootElement.parentElement.removeChild(this.rootElement);
-	}
+	delete = () => this.rootElement.parentElement.removeChild(this.rootElement);
 
 	destroy() {
 		this.rootElement.removeAttribute('hidden');

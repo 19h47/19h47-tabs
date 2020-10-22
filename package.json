@@ -29,14 +29,14 @@
 		"core-js": "^3.6.5",
 		"eslint": "^7.11.0",
 		"eslint-config-airbnb-base": "^14.2.0",
-		"eslint-config-prettier": "^6.13.0",
-		"eslint-config-standard": "^14.1.1",
+		"eslint-config-prettier": "^6.14.0",
+		"eslint-config-standard": "^15.0.0",
 		"eslint-import-resolver-webpack": "^0.13.0",
 		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
-		"eslint-plugin-standard": "^4.0.1",
+		"eslint-plugin-standard": "^4.0.2",
 		"html-webpack-plugin": "^4.5.0",
 		"prettier": "^2.0.5",
 		"webpack": "4.41.3",
@@ -47,6 +47,8 @@
 	},
 	"dependencies": {
 		"@19h47/keycode": "3.0.3",
+		"@babel/eslint-plugin": "^7.12.1",
+		"@babel/plugin-proposal-class-properties": "^7.12.1",
 		"events": "^3.2.0"
 	}
 }

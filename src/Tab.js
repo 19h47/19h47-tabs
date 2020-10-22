@@ -11,25 +11,20 @@ export default class Tab extends EventEmitter {
 		this.active = JSON.parse(element.getAttribute('aria-selected'));
 		this.callback = callback.bind(this);
 
-		this.toggle = this.toggle.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
-	init() {
-		this.initEvents();
-	}
+	init = () => this.initEvents();
 
-	initEvents() {
-		this.rootElement.addEventListener('click', this.toggle);
-	}
+	initEvents = () => this.rootElement.addEventListener('click', this.handleClick);
 
 	/**
-	 * Toggle
+	 * handleClick
 	 *
 	 * @param {boolean} focus
-	 * @return void
 	 */
-	async toggle(focus = true) {
-		// console.info('Tab.toggle', this.active);
+	async handleClick(focus = true) {
+		// console.info('Tab.handleClick', this.active);
 
 		if (this.active) {
 			return;
@@ -81,26 +76,20 @@ export default class Tab extends EventEmitter {
 	 *
 	 * @return void
 	 */
-	focus() {
-		this.rootElement.focus();
-	}
+	focus = () => this.rootElement.focus();
 
 	/**
 	 * Delete tab
 	 *
 	 * @return void
 	 */
-	delete() {
-		// console.info('Tab.delete');
-
-		this.rootElement.parentElement.removeChild(this.rootElement);
-	}
+	delete = () => this.rootElement.parentElement.removeChild(this.rootElement);
 
 	destroy() {
 		this.rootElement.removeAttribute('tabindex');
 		this.rootElement.removeAttribute('aria-selected');
 		this.rootElement.classList.remove('is-active');
 
-		this.rootElement.removeEventListener('click', this.toggle);
+		this.rootElement.removeEventListener('click', this.handleClick);
 	}
 }

@@ -33,8 +33,8 @@ export default class Tabs {
 		this.href = (this.options.hash && getHash(window.location.hash)) || false;
 		this.current = 0;
 
-		this.onKeydown = this.onKeydown.bind(this);
-		this.onKeyup = this.onKeyup.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
+		this.handleKeyup = this.handleKeyup.bind(this);
 	}
 
 	init() {
@@ -76,8 +76,8 @@ export default class Tabs {
 	}
 
 	initEvents() {
-		this.$tabList.addEventListener('keyup', this.onKeyup);
-		this.$tabList.addEventListener('keydown', this.onKeydown);
+		this.$tabList.addEventListener('keyup', this.handleKeyup);
+		this.$tabList.addEventListener('keydown', this.handleKeydown);
 	}
 
 	/**
@@ -88,8 +88,8 @@ export default class Tabs {
 	 * @param  {object} event
 	 * @return void
 	 */
-	onKeydown(event) {
-		// console.log('Tabs.onKeydown');
+	handleKeydown(event) {
+		// console.log('Tabs.handleKeydown');
 
 		const { keyCode: key } = event;
 
@@ -98,7 +98,7 @@ export default class Tabs {
 			event.preventDefault();
 
 			this.current = 0;
-			this.tabs[0].toggle();
+			this.tabs[0].handleClick();
 		};
 
 		// My last
@@ -106,7 +106,7 @@ export default class Tabs {
 			event.preventDefault();
 
 			this.current = this.tabs.length - 1;
-			this.tabs[this.tabs.length - 1].toggle();
+			this.tabs[this.tabs.length - 1].handleClick();
 		};
 
 		// My everything
@@ -139,8 +139,8 @@ export default class Tabs {
 	 * @param {object} event
 	 * @return void
 	 */
-	onKeyup(event) {
-		// console.info('Tabs.onKeyup');
+	handleKeyup(event) {
+		// console.info('Tabs.handleKeyup');
 
 		const { keyCode: key, target } = event;
 		const selected = JSON.parse(target.getAttribute('aria-selected'));
@@ -192,18 +192,14 @@ export default class Tabs {
 	 *
 	 * @return void
 	 */
-	deactivateTabs() {
-		this.tabs.forEach(tab => tab.deactivate());
-	}
+	deactivateTabs = () => this.tabs.forEach(tab => tab.deactivate());
 
 	/**
 	 * Deactivate tab panels
 	 *
 	 * @return void
 	 */
-	deactivateTabPanels() {
-		this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
-	}
+	deactivateTabPanels = () => this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
 
 	/**
 	 * Determine deletable
@@ -230,10 +226,10 @@ export default class Tabs {
 		// Activate the closest tab to the one that was just deleted
 		if (0 > target.index - 1) {
 			this.current = 0;
-			this.tabs[0].toggle();
+			this.tabs[0].handleClick();
 		} else {
 			this.current = target.index - 1;
-			this.tabs[target.index - 1].toggle();
+			this.tabs[target.index - 1].handleClick();
 		}
 
 		return true;
@@ -250,14 +246,14 @@ export default class Tabs {
 
 		setTimeout(() => {
 			if (target === document.activeElement) {
-				this.tabs[target.index].toggle(false);
+				this.tabs[target.index].handleClick(false);
 			}
 		}, this.options.delay);
 	}
 
 	destroy() {
-		this.$tabList.removeEventListener('keyup', this.onKeyup);
-		this.$tabList.removeEventListener('keydown', this.onKeydown);
+		this.$tabList.removeEventListener('keyup', this.handleKeyup);
+		this.$tabList.removeEventListener('keydown', this.handleKeydown);
 
 		this.tabs.forEach(tab => tab.destroy());
 		this.tabPanels.forEach(tabPanel => tabPanel.destroy());
@@ -266,7 +262,5 @@ export default class Tabs {
 		this.tabPanels = [];
 	}
 
-	create() {
-		this.init();
-	}
+	create = () => this.init();
 }
