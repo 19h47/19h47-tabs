@@ -12,6 +12,12 @@
 			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 			crossorigin="anonymous"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"
+			integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+			crossorigin="anonymous"
+		/>
 		<style>
 			.tab-content > .is-active {
 				display: block;
@@ -60,6 +66,16 @@
 					<h1 class="m-0">
 						<a href="https://github.com/19h47/19h47-tabs"> Tabs </a>
 					</h1>
+				</div>
+			</div>
+			<div class="row my-5">
+				<div class="col-12">
+					<pre class="p-3 language-javascript"><code>import Tabs from '@19h47/tabs';
+
+const $element = document.querySelector('.js-tabs');
+const tabs = new Tabs($element);
+
+tabs.init();</code></pre>
 				</div>
 			</div>
 			<div class="row my-5">
@@ -488,7 +504,8 @@
 				</div>
 			</div>
 		</div>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
 		<script src="main.js"></script>
 		<script>
 			const elements = [...document.querySelectorAll('.js-tabs')];
