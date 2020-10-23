@@ -98,7 +98,7 @@ export default class Tabs {
 			event.preventDefault();
 
 			this.current = 0;
-			this.tabs[0].handleClick();
+			this.tabs[0].toggle();
 		};
 
 		// My last
@@ -106,7 +106,7 @@ export default class Tabs {
 			event.preventDefault();
 
 			this.current = this.tabs.length - 1;
-			this.tabs[this.tabs.length - 1].handleClick();
+			this.tabs[this.tabs.length - 1].toggle();
 		};
 
 		// My everything
@@ -226,10 +226,10 @@ export default class Tabs {
 		// Activate the closest tab to the one that was just deleted
 		if (0 > target.index - 1) {
 			this.current = 0;
-			this.tabs[0].handleClick();
+			this.tabs[0].toggle();
 		} else {
 			this.current = target.index - 1;
-			this.tabs[target.index - 1].handleClick();
+			this.tabs[target.index - 1].toggle();
 		}
 
 		return true;
@@ -246,7 +246,7 @@ export default class Tabs {
 
 		setTimeout(() => {
 			if (target === document.activeElement) {
-				this.tabs[target.index].handleClick(false);
+				this.tabs[target.index].toggle(false);
 			}
 		}, this.options.delay);
 	}
@@ -262,5 +262,8 @@ export default class Tabs {
 		this.tabPanels = [];
 	}
 
+	/**
+	 * Create
+	 */
 	create = () => this.init();
 }

@@ -19,11 +19,16 @@ export default class Tab extends EventEmitter {
 	initEvents = () => this.rootElement.addEventListener('click', this.handleClick);
 
 	/**
-	 * handleClick
+	 * Handle click
+	 */
+	handleClick = () => this.toggle();
+
+	/**
+	 * Toggle
 	 *
 	 * @param {boolean} focus
 	 */
-	async handleClick(focus = true) {
+	async toggle(focus = true) {
 		// console.info('Tab.handleClick', this.active);
 
 		if (this.active) {
