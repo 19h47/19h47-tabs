@@ -1,9 +1,5 @@
-import { hash, delay } from '@/config';
-import TabPanel from '@/TabPanel';
-import Tab from '@/Tab';
 import getHash from 'Utils/getHash';
 import direction from 'Utils/direction';
-
 import {
 	BACKSPACE,
 	HOME,
@@ -15,10 +11,14 @@ import {
 	DELETE,
 } from '@19h47/keycode';
 
+import { hash, delay } from '@/config';
+import TabPanel from '@/TabPanel';
+import Tab from '@/Tab';
+
 const defaults = {
 	hash,
 	delay,
-	callback() {},
+	callback() { },
 };
 
 export default class Tabs {
