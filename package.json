@@ -1,28 +1,34 @@
 {
 	"name": "@19h47/tabs",
-	"version": "5.4.0",
+	"version": "5.4.1",
 	"description": "Tabs",
-	"main": "dist/main.js",
-	"scripts": {
-		"prod": "webpack --mode=production --config webpack/webpack.config.js",
-		"dev": "webpack --mode=development --config webpack/webpack.config.js",
-		"deploy": "yarn login && yarn prod && npm publish",
-		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/19h47/19h47-tabs.git"
 	},
-	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
 	"license": "ISC",
+	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+	"main": "dist/main.js",
+	"scripts": {
+		"deploy": "yarn login && yarn prod && npm publish",
+		"dev": "webpack --mode=development --config webpack/webpack.config.js",
+		"prod": "webpack --mode=production --config webpack/webpack.config.js",
+		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
+	},
+	"dependencies": {
+		"@19h47/keycode": "3.0.3",
+		"events": "^3.3.0"
+	},
 	"devDependencies": {
 		"@19h47/prettier-config": "^1.0.0",
 		"@babel/core": "^7.15.8",
+		"@babel/eslint-parser": "^7.15.8",
+		"@babel/eslint-plugin": "^7.14.5",
+		"@babel/plugin-proposal-class-properties": "^7.14.5",
 		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
 		"@babel/plugin-transform-runtime": "^7.15.8",
 		"@babel/preset-env": "^7.15.8",
 		"@babel/runtime": "^7.15.4",
-		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.2.2",
 		"clean-webpack-plugin": "^4.0.0",
 		"copy-webpack-plugin": "^9.0.1",
@@ -32,11 +38,10 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-config-standard": "^16.0.3",
 		"eslint-import-resolver-webpack": "^0.13.1",
-		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.25.2",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^5.1.0",
-		"eslint-plugin-standard": "^5.0.0",
+		"eslint-webpack-plugin": "^3.0.1",
 		"html-webpack-plugin": "^5.3.2",
 		"prettier": "^2.4.1",
 		"webpack": "5.58.2",
@@ -44,11 +49,5 @@
 		"webpack-dev-server": "^4.3.1",
 		"webpack-merge": "^5.8.0",
 		"webpack-notifier": "^1.14.0"
-	},
-	"dependencies": {
-		"@19h47/keycode": "3.0.3",
-		"@babel/eslint-plugin": "^7.14.5",
-		"@babel/plugin-proposal-class-properties": "^7.14.5",
-		"events": "^3.3.0"
 	}
 }
