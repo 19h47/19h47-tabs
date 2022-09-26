@@ -6,7 +6,7 @@ export default class Tab extends EventEmitter {
 		this.rootElement = element;
 		this.rootElement.index = index;
 		this.id = element.id;
-		this.controls = element.getAttribute('aria-controls');
+		[this.controls] = element.getAttribute('aria-controls').trim().split(' ');
 
 		this.active = JSON.parse(element.getAttribute('aria-selected'));
 		this.callback = callback.bind(this);
