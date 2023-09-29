@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/tabs",
-	"version": "5.6.1",
+	"version": "5.6.2",
 	"description": "Tabs",
 	"repository": {
 		"type": "git",
@@ -16,7 +16,7 @@
 		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"dependencies": {
-		"@19h47/keycode": "3.0.3",
+		"@19h47/keycode": "3.1.0",
 		"events": "^3.3.0"
 	},
 	"devDependencies": {
