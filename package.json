@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/tabs",
-	"version": "5.6.2",
+	"version": "6.0.0",
 	"description": "Tabs",
 	"repository": {
 		"type": "git",
@@ -10,27 +10,18 @@
 	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
 	"main": "dist/main.js",
 	"scripts": {
-		"deploy": "yarn login && yarn prod && npm publish",
+		"deploy": "npm login && npm run build && npm publish",
 		"dev": "webpack --mode=development --config webpack/webpack.config.js",
-		"prod": "webpack --mode=production --config webpack/webpack.config.js",
-		"start": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
+		"build": "webpack --mode=production --config webpack/webpack.config.js",
+		"serve": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"dependencies": {
-		"@19h47/keycode": "3.1.0",
 		"events": "^3.3.0"
 	},
 	"devDependencies": {
 		"@19h47/prettier-config": "^1.0.0",
-		"@babel/core": "^7.23.0",
-		"@babel/eslint-parser": "^7.22.15",
-		"@babel/eslint-plugin": "^7.22.10",
-		"@babel/plugin-transform-runtime": "^7.22.15",
-		"@babel/preset-env": "^7.22.20",
-		"@babel/runtime": "^7.23.1",
-		"babel-loader": "^9.1.3",
 		"clean-webpack-plugin": "^4.0.0",
 		"copy-webpack-plugin": "^11.0.0",
-		"core-js": "^3.32.2",
 		"eslint": "^8.50.0",
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-config-prettier": "^9.0.0",
@@ -41,6 +32,8 @@
 		"eslint-webpack-plugin": "^4.0.1",
 		"html-webpack-plugin": "^5.5.3",
 		"prettier": "^3.0.3",
+		"ts-loader": "^9.4.4",
+		"typescript": "^5.2.2",
 		"webpack": "5.88.2",
 		"webpack-cli": "5.1.4",
 		"webpack-dev-server": "^4.15.1",

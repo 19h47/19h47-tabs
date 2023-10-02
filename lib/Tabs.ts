@@ -1,0 +1,241 @@
+import getHash from './utils/getHash';
+import direction from './utils/direction';
+import { hash, delay } from './config';
+import TabPanel from './TabPanel';
+import Tab from './Tab';
+
+interface Options {
+	hash: boolean;
+	orientation?: string | undefined;
+	callback?: Callback;
+	delay: number;
+}
+
+export type Callback = () => void;
+
+const optionsDefault = {
+	hash,
+	delay,
+	callback() { },
+};
+
+export default class Tabs {
+	el: HTMLElement;
+	$tabList: HTMLElement | null;
+	current: number = 0;
+	tabPanels: TabPanel[] = [];
+	tabs: Tab[] = [];
+	href: string = '';
+	options: Options;
+
+	constructor(el: HTMLElement, options = {}) {
+		this.el = el;
+
+		this.$tabList = this.el.querySelector<HTMLElement>('[role="tablist"]');
+
+		this.options = { ...optionsDefault, ...options };
+		this.options.orientation = this.$tabList?.getAttribute('aria-orientation') || 'horizontal';
+
+		this.href = (this.options.hash && getHash(window.location.hash)) || '';
+
+		this.handleKeydown = this.handleKeydown.bind(this);
+		// this.handleKeyup = this.handleKeyup.bind(this);
+	}
+
+	init() {
+		// @ts-ignore
+		this.tabs = [...this.$tabList.querySelectorAll('[role="tab"]')].map(
+			// @ts-ignore
+			$element => new Tab($element, this.options.callback),
+		);
+		this.tabPanels = [...this.el.querySelectorAll('[role="tabpanel"]')].map(
+			// @ts-ignore
+			$element => new TabPanel($element),
+		);
+
+		this.tabs.forEach((tab, index) => {
+			tab.init();
+
+			tab.on('Tab.activate', () => {
+				// console.info('Tab.activate');
+				this.current = index;
+
+				this.deactivateTabs();
+				this.deactivateTabPanels();
+				// @ts-ignore
+				this.tabPanels.find(tabPanel => tabPanel.id === tab.controls).activate();
+
+				if (this.options.hash) {
+					this.href = tab.id;
+					window.location.hash = tab.id;
+				}
+			});
+
+			if (tab.active || tab.id === this.href || this.current === index) {
+				this.deactivateTabs();
+				this.deactivateTabPanels();
+
+				tab.activate(false);
+				// @ts-ignore
+				this.tabPanels.find(tabPanel => tabPanel.id === tab.controls).activate();
+			}
+		});
+
+		this.initEvents();
+	}
+
+	initEvents() {
+		this.$tabList?.addEventListener('keydown', this.handleKeydown);
+	}
+
+	/**
+	 * Keydown event listener
+	 *
+	 * Handle keydown on tabs
+	 *
+	 * @param  { KeyboardEvent} event
+	 * @return void
+	 */
+	handleKeydown(event: KeyboardEvent) {
+		// console.log('Tabs.handleKeydown');
+
+		const { key, code, target } = event;
+
+		const selected = JSON.parse(
+			(target as HTMLElement).getAttribute('aria-selected') as string,
+		);
+
+		const previous = () => {
+			this.current = 0 > this.current - 1 ? this.tabs.length - 1 : this.current - 1;
+			this.tabs[this.current].focus();
+
+			if (this.options.delay) {
+				setTimeout(() => {
+					this.tabs[this.current].toggle(false);
+				}, this.options.delay);
+			}
+		};
+		const next = () => {
+			this.current = this.current + 1 > this.tabs.length - 1 ? 0 : this.current + 1;
+			this.tabs[this.current].focus();
+
+			if (this.options.delay) {
+				setTimeout(() => {
+					this.tabs[this.current].toggle(false);
+				}, this.options.delay);
+			}
+		};
+
+		// My first
+		const first = () => {
+			event.preventDefault();
+
+			this.current = 0;
+			this.tabs[this.current].toggle();
+		};
+
+		// My last
+		const last = () => {
+			event.preventDefault();
+
+			this.current = this.tabs.length - 1;
+			this.tabs[this.current].toggle();
+		};
+
+		// My everything
+		const codes: any = {
+			ArrowUp: previous,
+			ArrowLeft: previous,
+			ArrowDown: next,
+			ArrowRight: next,
+			End: last,
+			Home: first,
+			PageUp: first,
+			PageDown: last,
+			Delete: () => selected && this.determineDeletable(event),
+			Backspace: () => selected && this.determineDeletable(event),
+			default: () => false,
+		};
+
+		return (codes[key || code] || codes.default)();
+	}
+
+	/**
+	 * Deactivate tabs
+	 *
+	 * @return void
+	 */
+	deactivateTabs = () => this.tabs.forEach(tab => tab.deactivate());
+
+	/**
+	 * Deactivate tab panels
+	 *
+	 * @return void
+	 */
+	deactivateTabPanels = () => this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
+
+	/**
+	 * Determine deletable
+	 *
+	 * Detect if a tab is deletable
+	 *
+	 * @param  {KeyboardEvent} event
+	 *
+	 * @return {boolean}
+	 */
+	determineDeletable({ target }: KeyboardEvent): boolean {
+		// console.info('Tabs.determineDeletable');
+
+		if (null === (target as HTMLElement).getAttribute('data-deletable')) {
+			return false;
+		}
+
+		this.tabs[this.current].delete();
+		this.tabPanels[this.current].delete();
+
+		this.tabs.splice(this.current, 1);
+		this.tabPanels.splice(this.current, 1);
+
+		// Activate the closest tab to the one that was just deleted
+		if (0 > this.current - 1) {
+			this.current = 0;
+		} else {
+			this.current = this.current - 1;
+		}
+
+		this.tabs[this.current].toggle();
+
+		return true;
+	}
+
+	// /**
+	//  * Focus event handler
+	//  *
+	//  * @param {object} event
+	//  * @return void
+	//  */
+	// focusEventHandler({ target }: FocusEvent): void {
+	// 	// console.info('Tabs.focusEventHandler');
+
+	// 	setTimeout(() => {
+	// 		if (target && target === document.activeElement) {
+	// 			this.tabs[this.current].toggle(false);
+	// 		}
+	// 	}, this.options.delay);
+	// }
+
+	destroy(): void {
+		this.$tabList?.removeEventListener('keydown', this.handleKeydown);
+
+		this.tabs.forEach(tab => tab.destroy());
+		this.tabPanels.forEach(tabPanel => tabPanel.destroy());
+
+		this.tabs = [];
+		this.tabPanels = [];
+	}
+
+	/**
+	 * Create
+	 */
+	create = () => this.init();
+}
