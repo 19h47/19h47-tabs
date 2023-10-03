@@ -396,6 +396,7 @@ tabs.init();</code></pre>
 		const $alert = document.querySelector('.js-alert');
 
 		const onChange = content => {
+			console.log('onChange');
 			const $el = alert(content);
 
 			$alert.appendChild($el);

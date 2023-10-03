@@ -1,5 +1,4 @@
 import getHash from './utils/getHash';
-import direction from './utils/direction';
 import { hash, delay } from './config';
 import TabPanel from './TabPanel';
 import Tab from './Tab';
@@ -37,9 +36,6 @@ export default class Tabs {
 		this.options.orientation = this.$tabList?.getAttribute('aria-orientation') || 'horizontal';
 
 		this.href = (this.options.hash && getHash(window.location.hash)) || '';
-
-		this.handleKeydown = this.handleKeydown.bind(this);
-		// this.handleKeyup = this.handleKeyup.bind(this);
 	}
 
 	init() {
@@ -96,8 +92,8 @@ export default class Tabs {
 	 * @param  { KeyboardEvent} event
 	 * @return void
 	 */
-	handleKeydown(event: KeyboardEvent) {
-		// console.log('Tabs.handleKeydown');
+	handleKeydown = (event: KeyboardEvent) => {
+		console.log('Tabs.handleKeydown');
 
 		const { key, code, target } = event;
 
@@ -152,8 +148,8 @@ export default class Tabs {
 			Home: first,
 			PageUp: first,
 			PageDown: last,
-			Delete: () => selected && this.determineDeletable(event),
-			Backspace: () => selected && this.determineDeletable(event),
+			Delete: () => selected && this.delete(event),
+			Backspace: () => selected && this.delete(event),
 			default: () => false,
 		};
 
@@ -175,16 +171,14 @@ export default class Tabs {
 	deactivateTabPanels = () => this.tabPanels.forEach(tabPanel => tabPanel.deactivate());
 
 	/**
-	 * Determine deletable
-	 *
-	 * Detect if a tab is deletable
+	 * Delete
 	 *
 	 * @param  {KeyboardEvent} event
 	 *
 	 * @return {boolean}
 	 */
-	determineDeletable({ target }: KeyboardEvent): boolean {
-		// console.info('Tabs.determineDeletable');
+	delete({ target }: KeyboardEvent): boolean {
+		// console.info('Tabs.delete');
 
 		if (null === (target as HTMLElement).getAttribute('data-deletable')) {
 			return false;
@@ -207,22 +201,6 @@ export default class Tabs {
 
 		return true;
 	}
-
-	// /**
-	//  * Focus event handler
-	//  *
-	//  * @param {object} event
-	//  * @return void
-	//  */
-	// focusEventHandler({ target }: FocusEvent): void {
-	// 	// console.info('Tabs.focusEventHandler');
-
-	// 	setTimeout(() => {
-	// 		if (target && target === document.activeElement) {
-	// 			this.tabs[this.current].toggle(false);
-	// 		}
-	// 	}, this.options.delay);
-	// }
 
 	destroy(): void {
 		this.$tabList?.removeEventListener('keydown', this.handleKeydown);

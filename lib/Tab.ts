@@ -17,9 +17,7 @@ export default class Tab extends EventEmitter {
 		this.controls = el.getAttribute('aria-controls')?.trim().split(' ')[0] || '';
 
 		this.active = JSON.parse(el.getAttribute('aria-selected') as string);
-		this.callback = callback.bind(this);
-
-		this.handleClick = this.handleClick.bind(this);
+		this.callback = callback;
 	}
 
 	init = () => this.initEvents();
@@ -37,8 +35,6 @@ export default class Tab extends EventEmitter {
 	 * @param {boolean} focus
 	 */
 	async toggle(focus: boolean = true): Promise<void> {
-		// console.info('Tab.handleClick', this.active);
-
 		if (this.active) {
 			return;
 		}

@@ -56,6 +56,7 @@ tabs.init();</code></pre></div></div><div class="my-5 row"><div><div class="p-3 
 		const $alert = document.querySelector('.js-alert');
 
 		const onChange = content => {
+			console.log('onChange');
 			const $el = alert(content);
 
 			$alert.appendChild($el);
