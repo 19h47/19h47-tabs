@@ -93,7 +93,7 @@ export default class Tabs {
 	 * @return void
 	 */
 	handleKeydown = (event: KeyboardEvent) => {
-		console.log('Tabs.handleKeydown');
+		// console.log('Tabs.handleKeydown');
 
 		const { key, code, target } = event;
 
