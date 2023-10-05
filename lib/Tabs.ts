@@ -5,7 +5,6 @@ import Tab from './Tab';
 
 interface Options {
 	hash: boolean;
-	orientation?: string | undefined;
 	callback?: Callback;
 	delay: number;
 }
@@ -33,7 +32,6 @@ export default class Tabs {
 		this.$tabList = this.el.querySelector<HTMLElement>('[role="tablist"]');
 
 		this.options = { ...optionsDefault, ...options };
-		this.options.orientation = this.$tabList?.getAttribute('aria-orientation') || 'horizontal';
 
 		this.href = (this.options.hash && getHash(window.location.hash)) || '';
 	}
