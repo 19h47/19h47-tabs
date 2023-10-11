@@ -37,6 +37,8 @@ export default class Tabs {
 	}
 
 	init() {
+		// console.log('Tabs.init');
+
 		// @ts-ignore
 		this.tabs = [...this.$tabList.querySelectorAll('[role="tab"]')].map(
 			// @ts-ignore
@@ -50,7 +52,7 @@ export default class Tabs {
 		this.tabs.forEach((tab, index) => {
 			tab.init();
 
-			tab.on('Tab.activate', () => {
+			tab.el.addEventListener('Tab.activate', () => {
 				// console.info('Tab.activate');
 				this.current = index;
 

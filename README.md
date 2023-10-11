@@ -133,7 +133,7 @@ To active panel on first load, add a `is-active` class to it.
 import Tabs from '@19h47/tabs';
 
 const $element = document.querySelector('.js-tabs');
-const tabs = new Tabs.default($el, {
+const tabs = new Tabs($el, {
 	callback() {
 		return new Promise(resolve => {
 			// animate, fetch data, use this, do your stuff, etc.
@@ -147,10 +147,10 @@ tabs.init();
 
 ## Events
 
-| Event        | Arguments | Description                                                            |
-| ------------ | --------- | ---------------------------------------------------------------------- |
-| Tab.activate | event     | Object containing current **controls** id, and current DOM **element** |
-| Tab.delete   | event     | Object containing current **controls** id, and current DOM **element** |
+| Event        | Arguments | Description                                                                   |
+| ------------ | --------- | ----------------------------------------------------------------------------- |
+| Tab.activate | event     | Detail object containing current **controls** id, and current DOM **element** |
+| Tab.delete   | event     | Detail object containing current **controls** id, and current DOM **element** |
 
 ```javascript
 import Tabs from '@19h47/tabs';

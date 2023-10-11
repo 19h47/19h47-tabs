@@ -95,11 +95,12 @@ tabs.init();</code></pre></div></div><div class="my-5 row"><div><div class="p-3 
 			$create && $create.addEventListener('click', () => tabs.create());
 
 			tabs.tabs.forEach(tab => {
-				tab.on('Tab.activate', ({ controls }) => {
-					onChange(`<strong>${controls}</strong> has been activated!`);
+				tab.el.addEventListener('Tab.activate', ({ detail }) => {
+					onChange(`<strong>${detail.controls}</strong> has been activated!`);
 				});
-				tab.on('Tab.delete', ({ controls }) => {
-					onChange(`<strong>${controls}</strong> has been deleted!`);
+				tab.el.addEventListener('Tab.delete', ({ detail }) => {
+					console.log('Tab.delete');
+					onChange(`<strong>${detail.controls}</strong> has been deleted!`);
 				});
 			});
 
@@ -107,8 +108,6 @@ tabs.init();</code></pre></div></div><div class="my-5 row"><div><div class="p-3 
 				$add.addEventListener('click', () => {
 					const { value: tab } = $input;
 					const { value: panel } = $textarea;
-
-					console.log('tetete');
 
 					if (tab && panel) {
 						console.log(tab, panel);
@@ -150,8 +149,8 @@ tabs.init();</code></pre></div></div><div class="my-5 row"><div><div class="p-3 
 						console.log(tabs);
 
 						tabs.tabs.forEach(tab => {
-							tab.on('Tab.activate', ({ controls }) => {
-								onChange(`<strong>${controls}</strong> has been activated!`);
+							tab.el.addEventListener('Tab.activate', ({ detail }) => {
+								onChange(`<strong>${detail.controls}</strong> has been activated!`);
 							});
 						});
 					}

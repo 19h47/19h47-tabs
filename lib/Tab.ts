@@ -1,7 +1,7 @@
-import { EventEmitter } from 'events';
 import { Callback } from './Tabs';
+import dispatchEvent from './utils/dispatchEvent';
 
-export default class Tab extends EventEmitter {
+export default class Tab {
 	el: HTMLElement;
 	active: boolean = false;
 	id: string = '';
@@ -9,8 +9,6 @@ export default class Tab extends EventEmitter {
 	controls: string;
 
 	constructor(el: HTMLElement, callback: Callback) {
-		super();
-
 		this.el = el;
 		this.id = el.id;
 
@@ -41,7 +39,7 @@ export default class Tab extends EventEmitter {
 
 		await this.callback();
 
-		this.emit('Tab.activate', { controls: this.controls, element: this.el });
+		dispatchEvent(this.el, { controls: this.controls, element: this.el }, 'activate');
 		this.activate(focus);
 	}
 
@@ -92,7 +90,10 @@ export default class Tab extends EventEmitter {
 	 *
 	 * @return void
 	 */
-	delete = () => this.el.parentElement?.removeChild(this.el);
+	delete = () => {
+		dispatchEvent(this.el, { controls: this.controls, element: this.el }, 'delete');
+		this.el.parentElement?.removeChild(this.el);
+	}
 
 	destroy(): void {
 		this.el.removeAttribute('tabindex');
