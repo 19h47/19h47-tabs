@@ -161,10 +161,12 @@ const tabs = new Tabs($element);
 tabs.init();
 
 tabs.tabs.forEach($tab => {
-	$tab.on('Tab.activate', ({ controls, element }) => {
+	$tab.el.addEventListener('Tab.activate', ({ detail }) => {
+		const { controls, element } = detail;
 		console.log(controls, element);
 	});
-	$tab.on('Tab.delete', ({ controls, element }) => {
+	$tab.el.addEventListener('Tab.delete', ({ detail }) => {
+		const { controls, element } = detail;
 		console.log(controls, element);
 	});
 });
