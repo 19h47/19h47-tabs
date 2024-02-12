@@ -1,13 +1,13 @@
 {
 	"name": "@19h47/tabs",
-	"version": "7.0.1",
+	"version": "7.0.2",
 	"description": "Tabs",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/19h47/19h47-tabs.git"
 	},
 	"license": "ISC",
-	"author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+	"author": "Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)",
 	"main": "dist/main.js",
 	"scripts": {
 		"deploy": "npm login && npm run build && npm publish",
@@ -16,22 +16,22 @@
 		"serve": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
 	},
 	"devDependencies": {
-		"@19h47/prettier-config": "^1.0.0",
+		"@19h47/prettier-config": "^2.0.0",
 		"clean-webpack-plugin": "^4.0.0",
-		"copy-webpack-plugin": "^11.0.0",
-		"eslint": "^8.51.0",
+		"copy-webpack-plugin": "^12.0.2",
+		"eslint": "^8.56.0",
 		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-import-resolver-webpack": "^0.13.7",
-		"eslint-plugin-import": "^2.28.1",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-import-resolver-webpack": "^0.13.8",
+		"eslint-plugin-import": "^2.29.1",
 		"eslint-webpack-plugin": "^4.0.1",
-		"html-webpack-plugin": "^5.5.3",
-		"ts-loader": "^9.5.0",
-		"typescript": "^5.2.2",
-		"webpack": "5.88.2",
+		"html-webpack-plugin": "^5.6.0",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.3.3",
+		"webpack": "5.90.1",
 		"webpack-cli": "5.1.4",
-		"webpack-dev-server": "^4.15.1",
-		"webpack-merge": "^5.9.0",
+		"webpack-dev-server": "^5.0.0",
+		"webpack-merge": "^5.10.0",
 		"webpack-notifier": "^1.15.0"
 	}
 }
