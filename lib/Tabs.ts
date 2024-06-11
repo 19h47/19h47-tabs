@@ -29,8 +29,7 @@ export default class Tabs {
 	constructor(el: HTMLElement, options = {}) {
 		this.el = el;
 
-		// [role="tablist"] element has to be direct child of wrapper el
-		this.$tabList = [...this.el.children].find(panel => panel.getAttribute('role') === 'tablist') as HTMLElement;
+		this.$tabList = this.el.querySelector('[role="tablist"]') as HTMLElement;
 
 		this.options = { ...optionsDefault, ...options };
 
