@@ -29,7 +29,8 @@ export default class Tabs {
 	constructor(el: HTMLElement, options = {}) {
 		this.el = el;
 
-		this.$tabList = this.el.querySelector<HTMLElement>('[role="tablist"]');
+		// [role="tablist"] element has to be direct child of wrapper el
+		this.$tabList = [...this.el.children].find(panel => panel.getAttribute('role') === 'tablist') as HTMLElement;
 
 		this.options = { ...optionsDefault, ...options };
 
@@ -44,12 +45,11 @@ export default class Tabs {
 			// @ts-ignore
 			$element => new Tab($element, this.options.callback),
 		);
-		this.tabPanels = [...this.el.querySelectorAll('[role="tabpanel"]')].map(
-			// @ts-ignore
-			$element => new TabPanel($element),
-		);
 
 		this.tabs.forEach((tab, index) => {
+			this.tabPanels.push(
+				new TabPanel(this.el.querySelector(`#${tab.controls}[role="tabpanel"]`) as HTMLElement)
+			);
 			tab.init();
 
 			tab.el.addEventListener('Tab.activate', () => {
