@@ -1,3 +1,7 @@
+[![](https://img.shields.io/npm/v/@19h47/tabs)](https://www.npmjs.com/package/@19h47/tabs)
+[![](https://img.shields.io/npm/dm/@19h47/tabs)](https://www.npmjs.com/package/@19h47/tabs)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/19h47/19h47-tabs)
+
 # @19h47/tabs
 
 > Tabulation partout, tabulation nulle part
