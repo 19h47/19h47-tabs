@@ -24,46 +24,42 @@ tabs.init();
 The element that serves as a container for the set of tabs. The `role="tablist"` attribute is required.  
 The `aria-label=""` attribute provides a label that describes the purpose of the set of tabs.
 
+The `role="tablist"`needs to be on a container element such as a `<div>`, `<nav>`, or `<section>`. It should not be placed on a `<ul>` element. Direct children of the tablist must be the tab elements with `role="tab"`.
+
 ```html
-<ul role="tablist" aria-label="navigation">
-	<li>
-		<button
-			type="button"
-			class="is-active"
-			role="tab"
-			aria-selected="true"
-			aria-controls="home-tab"
-			id="home"
-		>
-			Home
-		</button>
-	</li>
-	<li>
-		<button
-			type="button"
-			role="tab"
-			aria-selected="false"
-			aria-controls="project-tab"
-			id="project"
-			tabindex="-1"
-		>
-			Project
-		</button>
-	</li>
-	<li>
-		<button
-			type="button"
-			role="tab"
-			aria-selected="false"
-			aria-controls="contact-tab"
-			id="contact"
-			tabindex="-1"
-			data-deletable=""
-		>
-			Contact
-		</button>
-	</li>
-</ul>
+<div role="tablist" aria-label="navigation">
+	<button
+		type="button"
+		class="is-active"
+		role="tab"
+		aria-selected="true"
+		aria-controls="home-tab"
+		id="home"
+	>
+		Home
+	</button>
+	<button
+		type="button"
+		role="tab"
+		aria-selected="false"
+		aria-controls="project-tab"
+		id="project"
+		tabindex="-1"
+	>
+		Project
+	</button>
+	<button
+		type="button"
+		role="tab"
+		aria-selected="false"
+		aria-controls="contact-tab"
+		id="contact"
+		tabindex="-1"
+		data-deletable=""
+	>
+		Contact
+	</button>
+</div>
 ```
 
 ### Tab
@@ -89,7 +85,7 @@ The `aria-controls="foo-tab"` refers to the id of the tabpanel element associate
 
 Since an HTML button element is used for the tab, it is not necessary to set `tabindex="0"` on the selected (active) tab element.
 
-Is the tabulation deletable ? You can set up this option by adding the `data-deletable` attribute on button.
+Is the tabulation deletable? You can set up this option by adding the `data-deletable` attribute on button.
 
 To active the button on first load, add a `is-active` class to the button, remove the `tabindex` attribute and switch to `true` the `aria-selected` attribute.
 
